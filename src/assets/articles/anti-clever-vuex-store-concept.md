@@ -3,6 +3,7 @@ title: Anti-Clever - Pt. 3 Vuex Store as a Concept, not a Utility
 description: For VueJS there's often times a lingering question on how to structure components and how they can access their data.
 headerImg: https://firebasestorage.googleapis.com/v0/b/rdelgado-portfolio.appspot.com/o/articles%2Fjan-2021%2Fpuzzle.jpg?alt=media&token=08ab4311-22b1-4705-8fbd-d92d4f63ec0a
 tags: vuejs,methology,programming,anticlever
+date: January 3, 2022
 ---
 
 Anti-Clever TOC

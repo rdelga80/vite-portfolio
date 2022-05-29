@@ -3,6 +3,7 @@ title: Anti-Clever - A Programming Methodology to Simplify VueJs Frontend Develo
 description: VueJS is a powerful tool for Frontend development, but can very easily fall become messy and overcomplicated. Anti-Clever Development hopes to address some of the larger issues in VueJS development to help simplify code.
 headerImg: https://firebasestorage.googleapis.com/v0/b/rdelgado-portfolio.appspot.com/o/articles%2Fnov-2020%2Fanti-clever-vuejs-programming.jpg?alt=media&token=e517e429-be4d-45c6-a4d2-dc1415d79be5
 tags: vuejs,methology,programming,anticlever
+date: January 2, 2022
 ---
 
 Anti-Clever TOC

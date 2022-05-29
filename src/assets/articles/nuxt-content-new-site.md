@@ -1,8 +1,9 @@
 ---
 title: Using Nuxt's New @nuxt/content Module To Launch A New Site
 description: Nuxt's new content module makes launching a static website super fast and easy
-headerImg: https://firebasestorage.googleapis.com/v0/b/rdelgado-portfolio.appspot.com/o/articles%2Faug-2020%2Fnuxt-content-writing-blog-ssr-static.jpg?alt=media&token=648df5b7-eb59-481e-8956-0dfa2be6c7f2
+headerImg: /article-images/nuxt-content-writing-blog-ssr-static.jpg
 tags: nuxt,content,blog,vue
+date: January 5, 2022
 ---
 
 It was about time I spruced up the old portfolio website, and the timing was perfect as it lined up with Nuxt introducing a new content generation module - [@nuxt/content module](https://content.nuxtjs.org/).

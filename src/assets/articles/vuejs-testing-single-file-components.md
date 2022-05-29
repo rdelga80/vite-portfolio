@@ -3,6 +3,7 @@ title: VueJS Testing Basics - Pt 3 - Testing a Single File Component - Computed 
 description: Testing a Single File Component in VueJS - Methods, Components, Props, and more.
 headerImg: https://firebasestorage.googleapis.com/v0/b/rdelgado-portfolio.appspot.com/o/articles%2Fjan-2021%2Fvue-testing-sfc-jest.jpg?alt=media&token=0dbb5481-2c9b-4cf4-b658-c2e74058fb5a
 tags: vuejs,testing,jest,components,methods
+date: January 7, 2022
 ---
 
 Vue Testing Basics

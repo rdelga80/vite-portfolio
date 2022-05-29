@@ -3,6 +3,7 @@ title: VueJS Testing Basics - Pt 2
 description: VueJS Testing Basics, Pt. 2 - Testing Mentality, Intro to Test Driven Development
 headerImg: https://firebasestorage.googleapis.com/v0/b/rdelgado-portfolio.appspot.com/o/articles%2Fnov-2020%2Fvue-testing-basics-methods.jpg?alt=media&token=270a3f8b-80a1-4fae-a2e5-66ac3da575fb
 tags: vuejs,testing,jest,unit tests
+date: January 6, 2022
 ---
 
 Vue Testing Basics
