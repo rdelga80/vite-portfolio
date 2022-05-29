@@ -10,7 +10,7 @@ export default defineComponent({
 const articles = ref([])
 
 onBeforeMount(() => {
-  const articlesGlobs = import.meta.importGlob('/articles/**.md')
+  const articlesGlobs = import.meta.importGlob('@/assets/articles/**.md')
 
   Object.keys(articlesGlobs).forEach(async articleUrls => {
     const articleModules = () => import(articleUrls)
