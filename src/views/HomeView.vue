@@ -13,7 +13,7 @@ onBeforeMount(() => {
   const articlesGlobs = import.meta.importGlob('@/assets/articles/**.md')
 
   Object.keys(articlesGlobs).forEach(async articleUrls => {
-    const articleModules = () => import(articleUrls)
+    const articleModules = () => import(articleUrls.replace('/src', '../'))
 
     const { attributes, VueComponent } = await articleModules()
     
