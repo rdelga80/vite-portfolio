@@ -11,6 +11,8 @@ import { useRouter } from 'vue-router'
 let article = shallowRef(null)
 let articleAttributes = shallowRef(null)
 
+console.log('testing')
+
 onBeforeMount(() => {
   const articleSlug = useRouter().currentRoute.value.params.articleSlug
   const articleModule = () => import(`../assets/articles/${articleSlug}.md`)

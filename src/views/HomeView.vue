@@ -35,6 +35,12 @@ const articlesInOrder = computed(() => {
 </script>
 
 <template>
+  HOME PAGE
+
+  <router-link to="/articles/testing-mentality">
+    Go To mentality
+  </router-link>
+
   <div class="home">
     <div v-for="(article, index) in articlesInOrder" :key="index">
       <img :src="article.attributes.headerImg" />
