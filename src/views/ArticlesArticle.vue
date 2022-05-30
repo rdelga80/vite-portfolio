@@ -1,33 +1,22 @@
 <script>
 export default {
+  components: { ArticleLoader },
   name: 'ArticlesArticle'
 }
 </script>
 
 <script setup>
-import { onBeforeMount, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
-
-let article = shallowRef(null)
-let articleAttributes = shallowRef(null)
+import ArticleLoader from '../components/ArticleLoader.vue'
 
 console.log('testing')
 
-onBeforeMount(() => {
-  const articleSlug = useRouter().currentRoute.value.params.articleSlug
-  const articleModule = () => import(`../assets/articles/${articleSlug}.md`)
-  articleModule().then(({ attributes, VueComponent }) => {
-    article.value = VueComponent
-    articleAttributes.value = attributes
-  })
-})
+const articleSlug = useRouter().currentRoute.value.params.articleSlug
 </script>
 
 <template>
-  {{ articleAttributes }}
-
   <section class="article">
-    <component :is="article" />
+    <ArticleLoader :article-slug="articleSlug" />
   </section>
 </template>
 

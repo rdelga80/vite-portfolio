@@ -1,37 +1,23 @@
 <script>
-import { computed, defineComponent, onBeforeMount, ref } from 'vue'
-
 export default defineComponent({
   name: 'PHome'
 })
 </script>
 
 <script setup>
-const articles = ref([])
+import { defineComponent } from 'vue'
+import ArticleLoader from '@/components/ArticleLoader.vue'
 
-onBeforeMount(() => {
-  const articlesGlobs = import.meta.importGlob('@/assets/articles/**.md')
-
-  Object.keys(articlesGlobs).forEach(async articleUrls => {
-    const articleModules = () => import(articleUrls.replace('/src', '../'))
-
-    const { attributes, VueComponent } = await articleModules()
-    
-    articles.value = [
-      ...articles.value,
-      {
-        attributes,
-        VueComponent
-      }
-    ]
-  })
-})
-
-const articlesInOrder = computed(() => {
-  return [...articles.value]
-    ?.sort((a, b) => new Date(a.attributes.date) > new Date(b.attributes.date))
-    ?.reverse()
-})
+const articles = [
+  'anti-clever-component-structure',
+  'anti-clever-front-end-programming-methodology',
+  'anti-clever-vuex-store-concept',
+  'basic-jest-testing-concepts-in-vuejs',
+  'nuxt-content-new-site',
+  'testing-mentality',
+  'vuejs-testing-single-file-components',
+  'vuex-plugins-and-complete-components'
+]
 </script>
 
 <template>
@@ -42,11 +28,8 @@ const articlesInOrder = computed(() => {
   </router-link>
 
   <div class="home">
-    <div v-for="(article, index) in articlesInOrder" :key="index">
-      <img :src="article.attributes.headerImg" />
-
-      {{ article.attributes.title }}
-      {{ article.attributes.description }}
+    <div v-for="(articleSlug, index) in articles" :key="index">
+      <ArticleLoader :article-slug="articleSlug" />
     </div>
   </div>
 </template>
