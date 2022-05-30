@@ -8,16 +8,12 @@ export default defineComponent({
 import { defineComponent } from 'vue'
 import ArticleLoader from '@/components/ArticleLoader.vue'
 
-const articles = [
-  'anti-clever-component-structure',
-  'anti-clever-front-end-programming-methodology',
-  'anti-clever-vuex-store-concept',
-  'basic-jest-testing-concepts-in-vuejs',
-  'nuxt-content-new-site',
-  'testing-mentality',
-  'vuejs-testing-single-file-components',
-  'vuex-plugins-and-complete-components'
-]
+const articlesByGlob = import.meta.importGlob('../assets/articles/**.md')
+
+const articles = Object
+  .keys(articlesByGlob)
+  .reverse()
+  .map(glob => glob.split('/').at(-1).replace('.md', ''))
 </script>
 
 <template>
@@ -29,7 +25,7 @@ const articles = [
 
   <div class="home">
     <div v-for="(articleSlug, index) in articles" :key="index">
-      <ArticleLoader :article-slug="articleSlug" />
+      <ArticleLoader :article-slug="articleSlug" summary />
     </div>
   </div>
 </template>

@@ -8,7 +8,7 @@ import GlobPlugin from 'vite-plugin-glob'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), mdPlugin({ mode: 'vue' }), GlobPlugin()],
+  plugins: [vue(), mdPlugin({ mode: ['vue', 'html'] }), GlobPlugin()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

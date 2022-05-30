@@ -9,8 +9,6 @@ export default {
 import { useRouter } from 'vue-router'
 import ArticleLoader from '../components/ArticleLoader.vue'
 
-console.log('testing')
-
 const articleSlug = useRouter().currentRoute.value.params.articleSlug
 </script>
 
