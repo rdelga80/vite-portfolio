@@ -13,6 +13,7 @@ const props = defineProps({
     type: String,
     required: true
   },
+  short: Boolean,
   summary: Boolean
 })
 
@@ -45,14 +46,44 @@ onBeforeMount(() => {
 
 <template>
   <article class="article">
-    {{ articleAttributes }}
+    <router-link v-if="summary" :to="{ name: 'article', params: { articleSlug } }">
+      <h2>
+        {{ articleAttributes?.title }}
+      </h2>
+    </router-link>
 
-    <img :src="articleAttributes?.headerImg" />
+    <router-link
+      v-else-if="short"
+      class="short-link"
+      :to="{ name: 'article', params: { articleSlug } }">
+      {{ articleAttributes?.title }}
+    </router-link>
+
+    <h2 v-else>
+      {{ articleAttributes?.title }}
+    </h2>
+
+    <img v-if="!short" class="image-header" :src="articleAttributes?.headerImg" />
 
     <div v-if="summary" class="summary">
       <div v-html="articleSummary" />
     </div>
 
-    <component v-else :is="article" />
+    <component v-else-if="!short" :is="article" />
+
+    <router-link v-if="summary" :to="{ name: 'article', params: { articleSlug } }">
+      See More...
+    </router-link>
   </article>
 </template>
+
+<style lang="scss" scoped>
+.image-header {
+  max-width: 100%;
+}
+
+.short-link {
+  font-size: 12px;
+  text-decoration: none;
+}
+</style>
