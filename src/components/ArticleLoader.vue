@@ -29,6 +29,8 @@ onBeforeMount(() => {
   <article class="article">
     {{ articleAttributes }}
 
+    <img :src="articleAttributes.headerImg" />
+
     <component :is="article" />
   </article>
 </template>
