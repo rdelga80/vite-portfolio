@@ -63,21 +63,27 @@ onBeforeMount(() => {
       {{ articleAttributes?.title }}
     </h2>
 
-    <img v-if="!short" class="image-header" :src="articleAttributes?.headerImg" />
-
     <div v-if="summary" class="summary">
       <div v-html="articleSummary" />
     </div>
 
     <component v-else-if="!short" :is="article" />
 
-    <router-link v-if="summary" :to="{ name: 'article', params: { articleSlug } }">
-      See More...
-    </router-link>
+    <div class="more">
+      <router-link v-if="summary" :to="{ name: 'article', params: { articleSlug } }">
+        Read More...
+      </router-link>
+    </div>
   </article>
 </template>
 
 <style lang="scss" scoped>
+.article {
+  :deep pre {
+    white-space: pre-wrap;
+  }
+}
+
 .image-header {
   max-width: 100%;
 }
@@ -85,5 +91,9 @@ onBeforeMount(() => {
 .short-link {
   font-size: 12px;
   text-decoration: none;
+}
+
+.more {
+  text-align: right;
 }
 </style>

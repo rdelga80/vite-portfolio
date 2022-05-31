@@ -1,7 +1,6 @@
 ---
 title: VueJS Testing Basics - Pt. 1
 description: A run through of some of the basics for Testing in VueJS with Jest
-headerImg: https://firebasestorage.googleapis.com/v0/b/rdelgado-portfolio.appspot.com/o/articles%2Fnov-2020%2Fvuejs-testing-jest-basics.jpg?alt=media&token=be82c8e1-ee7c-4e9c-91ec-2451dc9f7978
 tags: vuejs,testing,jest,vuetestutils
 date: January 4, 2022
 ---

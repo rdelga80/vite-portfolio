@@ -1,7 +1,6 @@
 ---
 title: Using Nuxt's New @nuxt/content Module To Launch A New Site
 description: Nuxt's new content module makes launching a static website super fast and easy
-headerImg: /article-images/nuxt-content-writing-blog-ssr-static.jpg
 tags: nuxt,content,blog,vue
 date: January 5, 2022
 ---

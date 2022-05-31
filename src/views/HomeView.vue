@@ -19,3 +19,11 @@ const articles = getArticles(5)
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.home {
+  height: 100vh;
+  overflow: hidden scroll;
+  padding-right: 30px;
+}
+</style>

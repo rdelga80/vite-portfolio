@@ -13,13 +13,15 @@ const articleSlug = useRouter().currentRoute.value.params.articleSlug
 </script>
 
 <template>
-  <section class="article">
+  <section class="article-wrap">
     <ArticleLoader :article-slug="articleSlug" />
   </section>
 </template>
 
 <style lang="scss" scoped>
-.article {
-  opacity: 1;
+.article-wrap {
+  height: 100vh;
+  overflow-y: scroll;
+  padding-right: 30px;
 }
 </style>

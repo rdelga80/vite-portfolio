@@ -1,1 +1,10 @@
 @use '_typography.scss';
+@use '_elements.scss';
+
+* {
+  box-sizing: content-box;
+}
+
+body {
+  margin: 0;
+}

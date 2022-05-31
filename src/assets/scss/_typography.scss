@@ -7,4 +7,10 @@ body {
 
 a {
   color: black;
+
+  > h1 {
+    @at-root a {
+      text-decoration: none;
+    }
+  }
 }

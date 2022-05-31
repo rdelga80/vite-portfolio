@@ -27,13 +27,18 @@ import ASidebar from '@/components/ASidebar.vue'
 .container {
   @extend %container-vars;
 
-  column-gap: 24px;
+  column-gap: 12px;
   display: grid;
-  overflow: scroll;
-  justify-content: center;
   grid-template-columns: var(--grid-template-cols);
-  margin: 0 auto;
+  justify-content: center;
+  margin: 18px auto 0;
   max-width: 100%;
+  overflow: hidden scroll;
+  padding-bottom: 18px;
   width: 800px;
+}
+
+.main {
+  width: 100%;
 }
 </style>

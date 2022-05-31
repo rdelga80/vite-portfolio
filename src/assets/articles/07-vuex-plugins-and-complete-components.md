@@ -1,7 +1,6 @@
 ---
 title: Vuex Plugins and Outlining Complete Components
 description: Vuex plugins are a little known feature in Vuex, and implementing them can lead to abstracting concepts that can be burdensome to actions. But this also opens the door for deeper concepts like "complete components" - components that have dedicated store files.
-headerImg: https://firebasestorage.googleapis.com/v0/b/rdelgado-portfolio.appspot.com/o/articles%2Fmar-2021%2Fvuex-plugins-components.jpg?alt=media&token=7c47e5cb-06f0-4adb-a71a-3c8605e4dd2a
 tags: vuejs,vuex,plugins,components
 date: January 8, 2022
 ---
