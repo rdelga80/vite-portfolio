@@ -1,11 +1,11 @@
 <script>
-import { onBeforeMount, shallowRef } from 'vue'
 export default {
   name: 'ArticleLoader'
 }
 </script>
 
 <script setup>
+import { onBeforeMount, shallowRef } from 'vue'
 import { truncate } from 'lodash'
 
 const props = defineProps({
