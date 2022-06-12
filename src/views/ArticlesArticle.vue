@@ -33,6 +33,5 @@ const articleSlug = useRouter().currentRoute.value.params.articleSlug
   height: 100vh;
   overflow-y: scroll;
   padding-right: var(--padding-right);
-  width: 100%;
 }
 </style>
