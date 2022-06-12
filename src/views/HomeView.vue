@@ -21,9 +21,21 @@ const articles = getArticles(5)
 </template>
 
 <style lang="scss" scoped>
+%home-vars {
+  --home-height: 100vh;
+  --overflow-vars: hidden scroll;
+
+  @media (max-width: 600px) {
+    --home-height: 100%;
+    --overflow-vars: hidden visible;
+  }
+}
+
 .home {
-  height: 100vh;
-  overflow: hidden scroll;
+  @extend %home-vars;
+
+  height: var(--home-height);
+  overflow: var(--overflow-vars);
   padding-right: 30px;
 }
 </style>
