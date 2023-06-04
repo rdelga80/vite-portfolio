@@ -5,7 +5,7 @@ export default {
 </script>
 
 <script setup>
-  import ArticleLoader from './ArticleLoader.vue'
+import ArticleLoader from './ArticleLoader.vue'
 import { getArticles } from '@/assets/helpers.js'
 
 const articles = getArticles(5)
@@ -53,28 +53,44 @@ const articles = getArticles(5)
 </template>
 
 <style lang="scss" scoped>
+%sidebar-vars {
+  --articles-display: flex;
+  --details-display: unset;
+  
+  @media (max-width: $mobile-breakpoint) {
+    --articles-display: none;
+    --details-display: none;
+  }
+}
+
+.sidebar {
+  @extend %sidebar-vars;
+
+  opacity: 1;
+  height: 100%;
+  overflow: hidden scroll;
+  padding: 1rem;
+}
+
 .methods {
   font-size: 10px;
   margin-bottom: 28px;
 }
 
 .details {
+  display: var(--details-display);
   font-size: 12px;
   margin-bottom: 28px;
 }
 
 .articles {
-  display: flex;
+  display: var(--articles-display);
   flex-direction: column;
   row-gap: 20px;
 }
 
 .articles-title {
   margin: 0;
-}
-
-.sidebar {
-  opacity: 1;
 }
 
 .small {
