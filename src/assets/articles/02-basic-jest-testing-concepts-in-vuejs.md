@@ -7,7 +7,7 @@ date: January 4, 2022
 
 Vue Testing Basics TOC
 * Part 1: Introduction - Basic Setup (active)
-* [Part 2: Testing Mentality](/articles/testing-mentality)
+* [Part 2: Testing Mentality](/articles/03-testing-mentality)
 * [Part 3: Testing a Single File Component - Computed Properties](/articles/vuejs-testing-single-file-components)
 
 ---

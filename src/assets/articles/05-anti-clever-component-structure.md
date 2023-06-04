@@ -6,9 +6,9 @@ date: January 1, 2022
 ---
 
 Anti-Clever TOC
-* Part 1: [Introduction](/articles/anti-clever-front-end-programming-methodology)
+* Part 1: [Introduction](/articles/04-anti-clever-front-end-programming-methodology)
 * Part 2: Flattening Component Structure (active)
-* Part 3: [Vuex Store as a Concept, not a Utility](/articles/anti-clever-vuex-store-concept)
+* Part 3: [Vuex Store as a Concept, not a Utility](/articles/08-anti-clever-vuex-store-concept)
 
 ---
 

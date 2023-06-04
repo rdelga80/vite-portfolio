@@ -13,14 +13,17 @@ const articles = getArticles(5)
 
 <template>
   <aside class="sidebar">
-    <router-link to="/">
-      <h1>
-        Ricardo Delgado <br />
-        <small class="small">
-          Senior VueJs Developer
-        </small>
-      </h1>
-    </router-link>
+    <div class="sidebar-title">
+      <router-link to="/">
+        <h1>
+          Ricardo Delgado
+        </h1>
+  
+        <div class="sub-title">
+            Senior Frontend Web Developer
+          </div>
+      </router-link>
+    </div>
 
     <h6>
       email: ric [at] ricdelgado.com

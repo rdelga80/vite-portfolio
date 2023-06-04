@@ -21,8 +21,6 @@ const articles = getArticles()
 
 <style lang="scss" scoped>
 .articles {
-  height: 100vh;
-  overflow: hidden scroll;
   padding-right: 30px;
 }
 </style>

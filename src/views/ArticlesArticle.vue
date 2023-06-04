@@ -30,8 +30,6 @@ const articleSlug = useRouter().currentRoute.value.params.articleSlug
 .article-wrap {
   @extend %article-wrap;
 
-  height: 100vh;
-  overflow-y: scroll;
   padding-right: var(--padding-right);
 }
 </style>

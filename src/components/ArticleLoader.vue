@@ -47,7 +47,7 @@ onBeforeMount(() => {
 <template>
   <article class="article">
     <router-link v-if="summary" :to="{ name: 'article', params: { articleSlug } }">
-      <h2>
+      <h2 class="article-title">
         {{ articleAttributes?.title }}
       </h2>
     </router-link>
@@ -59,9 +59,13 @@ onBeforeMount(() => {
       {{ articleAttributes?.title }}
     </router-link>
 
-    <h2 v-else>
+    <h2 class="article-title" v-else>
       {{ articleAttributes?.title }}
     </h2>
+
+    <span class="article-date">
+      {{ articleAttributes?.date }}
+    </span>
 
     <div v-if="summary" class="summary">
       <div v-html="articleSummary" />
@@ -82,6 +86,15 @@ onBeforeMount(() => {
   :deep pre {
     white-space: pre-wrap;
   }
+}
+
+.article-title {
+  margin-bottom: 0;
+}
+
+.article-date {
+  font-size: 0.9rem;
+  font-style: italic;
 }
 
 .image-header {
