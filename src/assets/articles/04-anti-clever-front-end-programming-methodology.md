@@ -7,8 +7,8 @@ date: January 2, 2022
 
 Anti-Clever TOC
 * Part 1: Introduction (active)
-* Part 2: [Flattening Component Structure](/articles/anti-clever-component-structure)
-* Part 3: [Vuex Store as a Concept, not a Utility](/articles/anti-clever-vuex-store-concept)
+* Part 2: [Flattening Component Structure](/articles/05-anti-clever-component-structure)
+* Part 3: [Vuex Store as a Concept, not a Utility](/articles/08-anti-clever-vuex-store-concept)
 
 ---
 

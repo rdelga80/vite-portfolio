@@ -6,8 +6,8 @@ date: January 7, 2022
 ---
 
 Vue Testing Basics
-* [Part 1: Introduction - Basic Setup](/articles/basic-jest-testing-concepts-in-vuejs)
-* [Part 2: Testing Mentality, Intro to Test Driven Development](/articles/testing-mentality)
+* [Part 1: Introduction - Basic Setup](/articles/02-basic-jest-testing-concepts-in-vuejs)
+* [Part 2: Testing Mentality, Intro to Test Driven Development](/articles/03-testing-mentality)
 * Part 3: Testing a Single File Component - Computed Properties (active)
 
 ---

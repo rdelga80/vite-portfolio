@@ -75,6 +75,12 @@ const articles = getArticles(5)
   padding: 1rem;
 }
 
+.sidebar-title h1 {
+  @at-root a {
+    text-decoration: none;
+  }
+}
+
 .methods {
   font-size: 10px;
   margin-bottom: 28px;

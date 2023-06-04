@@ -81,6 +81,10 @@ onBeforeMount(() => {
 
     <component v-else-if="!short" :is="article" />
 
+    <div v-if="!short && summary" class="tags">
+      {{  articleAttributes?.tags }}
+    </div>
+
     <div class="more">
       <router-link v-if="summary" :to="{ name: 'article', params: { articleSlug } }">
         Read More...
@@ -98,6 +102,10 @@ onBeforeMount(() => {
 
 .article-title {
   margin-bottom: 0;
+
+  @at-root a {
+    text-decoration: none;
+  }
 }
 
 .article-date {
@@ -112,6 +120,10 @@ onBeforeMount(() => {
 .short-link {
   font-size: 12px;
   text-decoration: none;
+}
+
+.tags {
+  font-size: 12px;
 }
 
 .more {
