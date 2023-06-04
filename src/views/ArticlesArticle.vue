@@ -6,10 +6,17 @@ export default {
 </script>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import ArticleLoader from '../components/ArticleLoader.vue'
+import { ref, watch } from 'vue'
 
-const articleSlug = useRouter().currentRoute.value.params.articleSlug
+
+const route = useRoute()
+const articleSlug = ref(route.params.articleSlug)
+
+watch(route, newRoute => {
+  articleSlug.value = newRoute.params.articleSlug
+})
 </script>
 
 <template>

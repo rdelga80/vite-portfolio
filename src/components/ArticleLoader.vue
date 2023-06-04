@@ -5,7 +5,7 @@ export default {
 </script>
 
 <script setup>
-import { onBeforeMount, shallowRef } from 'vue'
+import { onBeforeMount, shallowRef, watch } from 'vue'
 import { truncate } from 'lodash'
 
 const props = defineProps({
@@ -34,13 +34,21 @@ const trimSummary = fullText => {
   })
 }
 
-onBeforeMount(() => {
-  const articleModule = () => import(`../assets/articles/${props.articleSlug}.md`)
+watch(() => props.articleSlug, newArticleSlug => {
+  setArticle(newArticleSlug)
+})
+
+const setArticle = (articleSlug) => {
+  const articleModule = () => import(`../assets/articles/${articleSlug}.md`)
   articleModule().then(({ attributes, html, VueComponent }) => {
     article.value = VueComponent
     articleAttributes.value = attributes
     articleSummary.value = trimSummary(html)
   })
+}
+
+onBeforeMount(() => {
+  setArticle(props.articleSlug)
 })
 </script>
 
@@ -63,7 +71,7 @@ onBeforeMount(() => {
       {{ articleAttributes?.title }}
     </h2>
 
-    <span class="article-date">
+    <span v-if="!short" class="article-date">
       {{ articleAttributes?.date }}
     </span>
 

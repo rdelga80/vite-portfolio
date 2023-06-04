@@ -6,8 +6,8 @@ date: January 3, 2022
 ---
 
 Anti-Clever TOC
-* Part 1: [Introduction](/articles/anti-clever-front-end-programming-methodology)
-* Part 2: [Flattening Component Structure](/articles/anti-clever-component-structure)
+* Part 1: [Introduction](/articles/04-anti-clever-front-end-programming-methodology)
+* Part 2: [Flattening Component Structure](/articles/05-anti-clever-component-structure)
 * Part 3: Vuex Store as a Concept, not a Utility (active)
 
 ---
