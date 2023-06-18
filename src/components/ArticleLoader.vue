@@ -7,6 +7,7 @@ export default {
 <script setup>
 import { onBeforeMount, shallowRef, watch } from 'vue'
 import { truncate } from 'lodash'
+import { setMeta, setPageMetaTitle } from '../assets/helpers'
 
 const props = defineProps({
   articleSlug: {
@@ -14,7 +15,8 @@ const props = defineProps({
     required: true
   },
   short: Boolean,
-  summary: Boolean
+  summary: Boolean,
+  isPage: Boolean,
 })
 
 const article = shallowRef(null)
@@ -40,15 +42,22 @@ watch(() => props.articleSlug, newArticleSlug => {
 
 const setArticle = (articleSlug) => {
   const articleModule = () => import(`../assets/articles/${articleSlug}.md`)
-  articleModule().then(({ attributes, html, VueComponent }) => {
+  return articleModule().then(({ attributes, html, VueComponent }) => {
     article.value = VueComponent
     articleAttributes.value = attributes
     articleSummary.value = trimSummary(html)
   })
 }
 
-onBeforeMount(() => {
-  setArticle(props.articleSlug)
+onBeforeMount(async () => {
+  await setArticle(props.articleSlug)
+
+  if (!props.isPage) {
+    return
+  }
+
+  setMeta('description', articleSummary.value)
+  setPageMetaTitle(articleAttributes.value?.title)
 })
 </script>
 
@@ -95,9 +104,14 @@ onBeforeMount(() => {
 
 <style lang="scss" scoped>
 .article {
-  :deep pre {
-    white-space: pre-wrap;
-  }
+  :deep {
+    img {
+      width: 100%;
+    }
+    pre {
+      white-space: pre-wrap;
+    }
+  } 
 }
 
 .article-title {

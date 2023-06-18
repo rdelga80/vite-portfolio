@@ -18,6 +18,11 @@ const router = createRouter({
       path: '/articles/:articleSlug',
       name: 'article',
       component: () => import('@/views/ArticlesArticle.vue')
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: '404',
+      component: () => import('@/views/404.vue')
     }
   ]
 })
