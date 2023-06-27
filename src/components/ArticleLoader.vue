@@ -36,11 +36,13 @@ const trimSummary = fullText => {
   })
 }
 
-watch(() => props.articleSlug, newArticleSlug => {
-  setArticle(newArticleSlug)
+watch(() => props.articleSlug, async (newArticleSlug) => {
+  await setArticle(newArticleSlug)
+
+  mountMeta()
 })
 
-const setArticle = (articleSlug) => {
+const setArticle = async (articleSlug) => {
   const articleModule = () => import(`../assets/articles/${articleSlug}.md`)
   return articleModule().then(({ attributes, html, VueComponent }) => {
     article.value = VueComponent
@@ -49,15 +51,20 @@ const setArticle = (articleSlug) => {
   })
 }
 
-onBeforeMount(async () => {
-  await setArticle(props.articleSlug)
-
+const mountMeta = () => {
   if (!props.isPage) {
     return
   }
 
   setMeta('description', articleSummary.value)
+  setMeta('keywords', articleAttributes.value?.tags)
   setPageMetaTitle(articleAttributes.value?.title)
+}
+
+onBeforeMount(async () => {
+  await setArticle(props.articleSlug)
+
+  mountMeta()
 })
 </script>
 

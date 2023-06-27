@@ -52,6 +52,10 @@ const articles = getArticles(5)
         <ArticleLoader :article-slug="article" short />
       </div>
     </div>
+
+    <RouterLink to="/articles">
+      <h4>All Articles →</h4>
+    </RouterLink>
   </aside>
 </template>
 

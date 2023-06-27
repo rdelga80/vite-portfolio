@@ -19,17 +19,15 @@ export const setMeta = (metaKey, value) => {
     return
   }
 
-  const meta = document.querySelector(`meta[name="${metaKey}"]`)
+  try {
+    const meta = document.querySelector(`meta[name="${metaKey}"]`)
 
-  if (!meta) {
-    console.warn(`No meta key by ${meta}`)
-
-    return
+    meta.setAttribute('content', sanitizeHtml(value, {
+      allowedTags: []
+    }))
+  } catch (e) {
+    console.warn(e)
   }
-
-  meta.setAttribute('content', sanitizeHtml(value, {
-    allowedTags: []
-  }))
 }
 
 export const setPageMetaTitle = (title) => {
