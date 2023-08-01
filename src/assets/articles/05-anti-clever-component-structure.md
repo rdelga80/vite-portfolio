@@ -1,5 +1,5 @@
 ---
-title: Anti-Clever - Pt. 1 Flattening Component Structures
+title: Anti-Clever - Pt. 2 Flattening Component Structures
 description: For VueJS there's often times a lingering question on how to structure components and how they can access their data.
 tags: vuejs,methology,programming,anticlever
 date: January 1, 2022
