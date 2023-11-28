@@ -11,7 +11,7 @@ This time I'm going to dig more deeply into exactly how to implement this mixed 
 
 To generate a standard bowling score UI, we're going to do a simple `v-for` loop on a data item for the frames (which we'll figure out later):
 
-```vue
+```
 <template>
   <div class="frames">
     <div v-for="frame in frames" :key="frame" class="frame">
