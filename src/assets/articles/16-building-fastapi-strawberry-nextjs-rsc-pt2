@@ -61,9 +61,9 @@ class User(Base):
         orm_mode = True
 ```
 
-Dang, I love SQLAlchemy, look how clean that structure is.
+Dang, I love SQLAlchemy, that structure is super clean.
 
-I think this is pretty self-explanatory, but something really important to note is the end part of the table:
+I think this is pretty self-explanatory, but definitely make sure to add this snipped at the end of the table:
 
 ```python
 class Config:
@@ -76,11 +76,11 @@ There are several to use, but FastAPI's docs recommend SQLAlchemy.
 
 This Config setting allows you now to use `User` as an object to interact with Postgres's databases. This is beyond handy.
 
-Now that we've defined our User model, we now need to use [Alembic](https://alembic.sqlalchemy.org/en/latest/) to migrate our databases to create our database table.
+Now that we've defined our User model, we now need to use [Alembic](https://alembic.sqlalchemy.org/en/latest/) to migrate our database to create our table.
 
-Following Jeff Astor's [Migrating Our Database](https://www.jeffastor.com/blog/pairing-a-postgresql-db-with-your-dockerized-fastapi-app/#migrating-our-database) guide on using Alembic, we create the User table within our data base.
+Following Jeff Astor's [Migrating Our Database](https://www.jeffastor.com/blog/pairing-a-postgresql-db-with-your-dockerized-fastapi-app/#migrating-our-database) guide on using Alembic, we can create the `User` table within our data base with some very easy steps he outlines using the command line within your Docker container.
 
-The biggest difference being that we're going to use `strawberry.ID` to provide our default ID values:
+The biggest difference between Astor's guide is that we're going to use `strawberry.ID` to provide our default ID values to our primary id columns:
 
 ```python
 import strawberry
@@ -95,7 +95,7 @@ def upgrade() -> None:
     pass
 ```
 
-And the last part of creating `User` is to create a Strawberry type associate with our object (within `app/domains/users/types.py`):
+The final part of creating `User` is to create a Strawberry type associated with our object:
 
 ```python
 # domains/users/types.py
@@ -110,7 +110,7 @@ class User:
     email: str
 ```
 
-Any frontend developer that's worked with Apollo and Typescript knows the importance of type declaration for a GraphQL API, and what we see above will become much more important when diving into the frontend side of this implementation.
+Any frontend developer that's worked with Apollo and Typescript knows the importance of type declaration for a GraphQL API, and what we see above will become much more important when diving into the frontend of this project.
 
 But for now, feel free to read through [Strawberry's Documentation on Object Types](https://strawberry.rocks/docs/types/object-types).
 
@@ -122,9 +122,9 @@ For example, our `User` response _has the possibility_ of returning `id`, `name`
 
 For more complex requests that we'll get to later, this functionality becomes extremely powerful for helping keep data requests slim and trim.
 
-Thankfully, though, Strawberry handles this for us, and all we really need to handle is properly structuring our Queries and Mutations properly.
+Thankfully, though, Strawberry handles this for us, and all we really need to handle is structuring our Queries and Mutations properly.
 
-Let's start with a very simple request, one without variables (an input filter), for all of the users in the database.
+Let's start with a very simple request, one without variables (aka an input filter in Strawberry), for all of the users in the database.
 
 ```python
 from typings import List
@@ -142,11 +142,11 @@ class UserQuery:
 
 I'm betting that's a lot simpler than you thought.
 
-Just to break it down, we're declaring a strawberry type of UserQuery (incidentally the same type as the User type that's being imported), then defining a field on that type for `users` that will then return a list of the type of users.
+Just to break it down, we're declaring a strawberry type of UserQuery (incidentally the same type as User), then defining a field on that type for `users` that will then return a list of the type of users.
 
-There's an alternate, and simpler syntax for this that you can find in [Strawberry's Docs on Queries](https://strawberry.rocks/docs/general/queries), but I'm preferring to use this syntax because of some steps I'll get into below.
+There's an alternate, and simpler syntax for Queries and fields that you can find in [Strawberry's Docs on Queries](https://strawberry.rocks/docs/general/queries), but I'm preferring to use this syntax because of some functionality I'll get into later.
 
-But rewriting this query like below is just as valid:
+But if we were choosing to use the simpler syntax it would look like this:
 
 ```python
 @strawberry.type
@@ -156,10 +156,10 @@ class UserQuery:
 
 The next step is connecting the Query to it's resolver.
 
-Since resolvers and controllers are the same logic, the examples outlined in FastAPI's documentation can be applied here.
+Since resolvers and controllers are the same thing the examples outlined in FastAPI's documentation can be applied here.
 
 ```python
-# domains.users.resolvers
+# domains/users/resolvers.py
 
 from typings import List
 
@@ -173,6 +173,8 @@ def get_all_users(db: Session) -> List[UserType]:
 Then plug it into the query:
 
 ```python
+# domains/users/queries.py
+
 from domains.users.resolvers import get_all_users
 
 @strawberry.type
@@ -182,11 +184,11 @@ class UserQuery:
         return get_all_users()
 ```
 
-If anyone is following along at home, you'll find that this query _doesn't_ work. And the reason being `db: Session` param in `get_all_users`.
+If anyone is following along at home, you'll find that this query _doesn't_ work. And the reason being the `db: Session` param in `get_all_users`.
 
-I'll address this in the next post, but I'm going to leave it for now, because following [FastAPI's documentation on connecting endpoints and databases](https://fastapi.tiangolo.com/tutorial/sql-databases/#create-the-database-tables) outlines the basics on what this means, but there's a couple of differences using Strawberry that I'll get into more.
+I'll address this in the next post, but I'm going to leave it for now, because following [FastAPI's documentation on connecting endpoints and databases](https://fastapi.tiangolo.com/tutorial/sql-databases/#create-the-database-tables) outlines the basics on what this means, but there's a couple of differences using Strawberry that I'll get dive into later.
 
-With your Docker container running, navigate to the exposed Strawberry GraphQL endpoint (for me it's just http://localhost:8008/graphql but your might be different depending on your Docker settings). Strawberry ships with it's own built in GraphQL playground, and you can test your endpoint with the following query:
+With your Docker container running, navigate to the exposed Strawberry GraphQL endpoint, for me it's just http://localhost:8008/graphql but your might be different depending on your Docker settings. Strawberry ships with it's own GraphQL playground, and you can test your endpoint with the following query:
 
 ```ts
 query AllUsers {
@@ -200,13 +202,15 @@ query AllUsers {
 
 ### Building A Mutation
 
-Thankfully, in Strawberry, mutations are basically the same structure as a query, but with a couple of differences.
+Thankfully in Strawberry mutations are basically the same structure as a query, but with a couple of minor differences.
 
-Remember in GraphQL that Mutations cover the _C_, _U_, and _D_ portion of CRUD, and do a lot of the heavy lifting.
+Remember in GraphQL that Mutations cover the _C_, _U_, and _D_ portion of CRUD, and do the heavy lifting for your API.
 
-Let's use a mutation to register a new user:
+Let's create a mutation to register a new user:
 
 ```python
+# domains/user/mutations.py
+
 import strawberry
 
 from domains.user.types import User
@@ -226,24 +230,24 @@ class UserMutation:
         [...]
 ```
 
-First note that instead of using `@strawberry.field` we're going to use `@strawberry.mutation` in our `UserMutation` type.
+Note that instead of using `@strawberry.field` we're going to use `@strawberry.mutation` in our `UserMutation` type.
 
 I first implemented this using `field` and it seemed to work the same, so I'm not sure if this helps with anything more than internal referencing but it's still good to differentiate mutations from queries.
 
-The other big difference (for now), is the `RegisterUserInput` input type.
+The other big difference is the `RegisterUserInput` input type.
 
 The input type will help keep the params of the mutation (or query) cleaner and will provide type helping for the client for inputs.
 
 Just like with our query, this mutation now needs to be connected to it's resolver:
 
 ```python
-# domains.users.resolvers
+# domains/users/resolvers.py
 
 from domains.user.types import User as UserType
 from domains.user.models import User as UserModel
 
 
-def add_user_db(name: str, email: str, password: str, db: Session) -> UserType:
+def add_user_db(name: str, email: str, db: Session) -> UserType:
     """
     Add a user to db
     """
@@ -257,7 +261,7 @@ def add_user_db(name: str, email: str, password: str, db: Session) -> UserType:
 ```
 
 ```python
-# domains.users.mutations
+# domains/users/mutations.py
 
 from domains.user.resolvers import add_user_db
 from domains.user.types import User
@@ -293,5 +297,7 @@ mutation AddUser (
 ```
 
 And in the section below the entry, you'll need to add the variables to be passed into `AddUser` for `$name`, `$email`, and `$password`.
+
+I haven't included it here, but if you notice the password is _obviously_ not stored directly in the `User` database and instead used to create an `Auth` item for this particular user, also outlined in [FastAPI's documentation on security](https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/#oauth2-with-password-and-hashing-bearer-with-jwt-tokens) which is extremely thorough.
 
 In the next post I'll dig into connecting up the `db` portion of the resolvers and how to do filtered queries and authentication on calls.
