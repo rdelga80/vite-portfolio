@@ -13,3 +13,12 @@ code {
   color: white;
   padding: 2px;
 }
+
+hr {
+  border-top: 1px solid rgba(149, 149, 149, 40%);
+  border-bottom: none;
+  margin-block: {
+    start: 2em;
+    end: 2em
+  }
+}

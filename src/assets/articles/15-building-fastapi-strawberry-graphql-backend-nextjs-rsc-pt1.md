@@ -1,8 +1,16 @@
 ---
-title: Building a fastAPI + Strawberry (Graphql) Backend with NextJs 12 and React Server Components, Pt. 1
+title: Building a FastAPI + Strawberry (Graphql) Backend with NextJs 12 and React Server Components, Pt. 1
 description: Building out a backend service using fastAPI + Strawberry graphql, Part 1
 tags: graphql,fastapi,python,backend,development,server,nextjs,react,react server components
 date: November 27, 2023
+---
+
+##### Building a FastAPI + Strawberry (Graphql) and NextJS 12 and React Server Components App
+
+* Part 1 - Setup For Strawberry + FastAPI
+* [Part 2 - Strawberry GraphQL: Queries and Mutations](/articles/16-building-fastapi-strawberry-nextjs-rsc-pt2)
+
+
 ---
 
 I took a bit of time off from my day job for the holidays, so what else am I going to do _but build out a whole gigantic app_. **_WHY NOT??_**
