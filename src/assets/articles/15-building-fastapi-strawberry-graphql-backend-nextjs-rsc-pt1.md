@@ -9,7 +9,7 @@ date: November 27, 2023
 
 * Part 1 - Setup For Strawberry + FastAPI
 * [Part 2 - Strawberry GraphQL: Queries and Mutations](/articles/16-building-fastapi-strawberry-nextjs-rsc-pt2)
-
+* [Part 3 - Managing Sessions and Context in Strawberry](/articles/17-building-fastapi-strawberry-nextjs-rsc-pt3)
 
 ---
 

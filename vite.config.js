@@ -25,5 +25,8 @@ export default defineConfig({
         additionalData: `@use '${srcPath}/assets/scss/variables.scss' as *;`
       }
     }
+  },
+  server: {
+    port: 3001
   }
 })
