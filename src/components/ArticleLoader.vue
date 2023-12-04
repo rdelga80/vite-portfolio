@@ -59,6 +59,9 @@ const mountMeta = () => {
   setMeta('description', articleSummary.value)
   setMeta('keywords', articleAttributes.value?.tags)
   setPageMetaTitle(articleAttributes.value?.title)
+  setMeta('og:title', articleAttributes.value?.title)
+  setMeta('og:type', 'article')
+  setMeta('og:image', '/article-images/nuxt-content-writing-blog-ssr-static.jpg')
 }
 
 onBeforeMount(async () => {
