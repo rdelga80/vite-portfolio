@@ -66,3 +66,84 @@ Which is why in our previous post, this direction doesn't work.
 Let's take a step back for a second, and look further into how Strawberry introduces a concept called Schema (which is inherited from GraphQL).
 
 As stated in [Strawberry's documentation on Schema](https://strawberry.rocks/docs/types/schema)
+
+> "Every GraphQL API has a schema and that is used to define all the functionalities for an API. A schema is defined by passing 3 object types: Query, Mutation and Subscription."
+
+Most importantly is how Schema defines all functionalities for an API.
+
+This is such a powerful difference from REST, and in application, this leads to having to define an implementation of your own app's Schema as such:
+
+```python
+# domains/core/schema.py
+
+from strawberry.fastapi import GraphQLRouter
+from strawberry.tools import merge_types
+
+from domains.users.queries import UserQuery
+from domains.teams.queries import TeamQuery
+
+from domains.users.mutations import UserMutation
+from domains.teams.mutations import TeamMutation
+
+
+queries = (UserQuery, TeamQuery)
+mutations = (UserMutation, TeamMutation)
+
+Query = merge_types('Query', queries)
+Mutation = merge_types('Mutation', mutations)
+
+schema = Schema(query=Query, mutation=Mutation)
+
+graphql_app = GraphQLRouter(schema)
+```
+
+This will be the base of our GraphQL Schema.
+
+The question now is if there's a way to inject our database references into this Schema, to be used similarly to a Session in the RESTful implementation.
+
+Thankfully there is, thanks to FastAPI! Under the [FastAPI section in Integrations, there's a section on context_getter.](https://strawberry.rocks/docs/integrations/fastapi#context_getter):
+
+> The context_getter option allows you to provide a custom context object that can be used in your resolver. context_getter is a FastAPI dependency and can inject other dependencies if you so wish.
+
+Adding a context to our `GraphQLRouter`, like so:
+
+```python
+graphql_app = GraphQLRouter(schema, context_getter=get_context)
+```
+
+We can then create this simple `get_context` method:
+
+```python
+from fastapi import Depends, Request
+from sqlalchemy.orm import Session
+
+from ...core.database import get_db
+
+
+async def get_context(request: Request, db: Session = Depends(get_db)):
+    return {
+        'db': db,
+    }
+```
+
+Going back to our previous post, remember that our User query wasn't working because `db` on our resolver was undefined. And previously we could assign it directly in our REST api endpoint, and pass it to our controllers, but in converting them to resolvers we no longer had access to this pattern.
+
+Now that the context is set in the Schema, we can now handle it as such:
+
+```python
+# domains/users/queries.py
+
+from strawberry.types import Info
+
+from domains.users.resolvers import get_all_users
+
+@strawberry.type
+class UserQuery:
+    @strawberry.field
+    def users(self, info: Info) -> List[User]:
+        db = info.context['db']
+
+        return get_all_users(db)
+```
+
+Now our database session can be passed to the resolver. This also makes it easy to reuse all of your REST controllers, and convert them to be used for a Strawberry GraphQL implementation.
