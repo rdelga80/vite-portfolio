@@ -10,7 +10,7 @@ date: December 4, 2023
 * [Part 1 - Setup For Strawberry + FastAPI](/articles/15-building-fastapi-strawberry-graphql-backend-nextjs-rsc-pt1)
 * Part 2 - Strawberry GraphQL: Queries and Mutations
 * [Part 3 - Managing Sessions and Context in Strawberry](/articles/17-building-fastapi-strawberry-nextjs-rsc-pt3)
-* [Part 4 - Switching to the Frontend: Next.js 13 and React Server Components](/articles/18-building-fastapi-strawberry-nextjs-rsc-pt4)
+* [Part 4 - Switching to the Frontend: Next.js 13 and React Server Components, Pt. 1](/articles/18-building-fastapi-strawberry-nextjs-rsc-pt4)
 
 ---
 
