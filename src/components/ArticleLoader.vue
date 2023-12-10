@@ -52,22 +52,26 @@ const setArticle = async (articleSlug) => {
 }
 
 const mountMeta = () => {
-  if (!props.isPage) {
-    return
-  }
+  return new Promise((res) => {
+    if (!props.isPage) {
+      res()
+    }
+  
+    setMeta('description', articleSummary.value)
+    setMeta('keywords', articleAttributes.value?.tags)
+    setPageMetaTitle(articleAttributes.value?.title)
+    setMeta('og:title', articleAttributes.value?.title, 'property')
+    setMeta('og:type', 'article', 'property')
+    setMeta('og:image', 'https://ricdelgado.com/article-images/nuxt-content-writing-blog-ssr-static.jpg', 'property')
 
-  setMeta('description', articleSummary.value)
-  setMeta('keywords', articleAttributes.value?.tags)
-  setPageMetaTitle(articleAttributes.value?.title)
-  setMeta('og:title', articleAttributes.value?.title)
-  setMeta('og:type', 'article')
-  setMeta('og:image', '/article-images/nuxt-content-writing-blog-ssr-static.jpg')
+    res()
+  })
 }
 
 onBeforeMount(async () => {
   await setArticle(props.articleSlug)
 
-  mountMeta()
+  return await mountMeta()
 })
 </script>
 

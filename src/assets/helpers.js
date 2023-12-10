@@ -14,19 +14,28 @@ export const getArticles = sliceLength => {
     .map(glob => getSlug(glob))
 }
 
-export const setMeta = (metaKey, value) => {
+export const setMeta = (metaKey, value, nameOrProperty = 'name') => {
   if (!window) {
     return
   }
+  
+  const meta = document.querySelector(`meta[${nameOrProperty}="${metaKey}"]`)
 
-  try {
-    const meta = document.querySelector(`meta[name="${metaKey}"]`)
-
+  if (meta) {
     meta.setAttribute('content', sanitizeHtml(value, {
       allowedTags: []
     }))
-  } catch (e) {
-    console.warn(e)
+  } else {
+    const headTag = document.getElementsByTagName('head')[0]
+
+    const metaTag = document.createElement('meta')
+
+    metaTag.setAttribute(nameOrProperty, metaKey)
+    metaTag.setAttribute('content', sanitizeHtml(value, {
+      allowedTags: []
+    }))
+
+    headTag.appendChild(metaTag)
   }
 }
 
