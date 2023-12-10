@@ -18,8 +18,9 @@ export const setMeta = (metaKey, value, nameOrProperty = 'name') => {
   if (!window) {
     return
   }
-
-  const meta = document.querySelector(`meta[name="${metaKey}"]`)
+  
+  const meta = document.querySelector(`meta[${nameOrProperty}="${metaKey}"]`)
+  console.log({ meta })
 
   if (meta) {
     meta.setAttribute('content', sanitizeHtml(value, {
