@@ -19,14 +19,23 @@ export const setMeta = (metaKey, value) => {
     return
   }
 
-  try {
-    const meta = document.querySelector(`meta[name="${metaKey}"]`)
+  const meta = document.querySelector(`meta[name="${metaKey}"]`)
 
+  if (meta) {
     meta.setAttribute('content', sanitizeHtml(value, {
       allowedTags: []
     }))
-  } catch (e) {
-    console.warn(e)
+  } else {
+    const headTag = document.getElementsByTagName('head')[0]
+
+    const metaTag = document.createElement('meta')
+
+    metaTag.setAttribute('name', metaKey)
+    metaTag.setAttribute('content', sanitizeHtml(value, {
+      allowedTags: []
+    }))
+
+    headTag.appendChild(metaTag)
   }
 }
 
