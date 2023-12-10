@@ -59,9 +59,9 @@ const mountMeta = () => {
   setMeta('description', articleSummary.value)
   setMeta('keywords', articleAttributes.value?.tags)
   setPageMetaTitle(articleAttributes.value?.title)
-  setMeta('og:title', articleAttributes.value?.title)
-  setMeta('og:type', 'article')
-  setMeta('og:image', '/article-images/nuxt-content-writing-blog-ssr-static.jpg')
+  setMeta('og:title', articleAttributes.value?.title, 'property')
+  setMeta('og:type', 'article', 'property')
+  setMeta('og:image', 'https://ricdelgado.com/article-images/nuxt-content-writing-blog-ssr-static.jpg', 'property')
 }
 
 onBeforeMount(async () => {

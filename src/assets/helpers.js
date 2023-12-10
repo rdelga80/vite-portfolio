@@ -14,7 +14,7 @@ export const getArticles = sliceLength => {
     .map(glob => getSlug(glob))
 }
 
-export const setMeta = (metaKey, value) => {
+export const setMeta = (metaKey, value, nameOrProperty = 'name') => {
   if (!window) {
     return
   }
@@ -30,7 +30,7 @@ export const setMeta = (metaKey, value) => {
 
     const metaTag = document.createElement('meta')
 
-    metaTag.setAttribute('name', metaKey)
+    metaTag.setAttribute(nameOrProperty, metaKey)
     metaTag.setAttribute('content', sanitizeHtml(value, {
       allowedTags: []
     }))
