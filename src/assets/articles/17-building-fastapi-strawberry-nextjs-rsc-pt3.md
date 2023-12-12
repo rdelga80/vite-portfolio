@@ -13,9 +13,9 @@ date: December 11, 2023
 
 ---
 
-One of the biggest differences that I found between Strawberry and a standard FastAPI REST solution is how to handle a database session.
+One of the biggest differences that I've found between Strawberry and a the standard FastAPI REST solution is how to handle a database session.
 
-I posted previous at the thoroughness of [FastAPI's documentation on connecting endpoints and databases](https://fastapi.tiangolo.com/tutorial/sql-databases/#create-the-database-tables), and this translates very simply as:
+I posted previous about the thoroughness of [FastAPI's documentation on connecting endpoints and databases](https://fastapi.tiangolo.com/tutorial/sql-databases/#create-the-database-tables), and my implementation for it is:
 
 ```python
 # domains/core/database.py
@@ -45,7 +45,7 @@ def get_db():
     db.close()
 ```
 
-`get_db` is especially handy, because it can be passed around your application as a way to interact with your database.
+`get_db` is especially handy, because it can be passed around your application's routes and controllers as a way to interact with your database thanks to SQLAlchemy's ORM functionality.
 
 An example being something like:
 
@@ -55,11 +55,13 @@ def get_users(db: Session = Depends(get_db)):
   return get_users_db(db)
 ```
 
-The simplicity of FastAPI's syntax allows you to attach and define context on a route function very easily, defining a dependency and gaining access to it with a single line.
+The simplicity of FastAPI's syntax allows you to attach and define the database Session dependency on a route function easily, gaining access to it with a single line which can then be passed into a controller like `get_users_db` where you would use that Session to retrieve, update, or delete users.
 
-For Strawberry this isn't quite so simple, and I couldn't find an explanation why. My best guess would have to be with the 1:1 direct calls for REST as compared to a GraphQL endpoint which doesn't have quite such a direct 1:1 call, and instead needs to have more of a global definition.
+For Strawberry this isn't quite so simple and I unfortunately couldn't find an explanation why.
 
-Which is why in our previous post, this direction doesn't work.
+My best guess would have to be with the 1:1 direct call for REST endpoints as compared to a GraphQL endpoint which isn't quite direct and instead needs to rely on a global dependency for the single GraphQL endpoint.
+
+This is why in our previous post this direction doesn't work.
 
 ### Strawberry and Context
 
@@ -69,9 +71,9 @@ As stated in [Strawberry's documentation on Schema](https://strawberry.rocks/doc
 
 > "Every GraphQL API has a schema and that is used to define all the functionalities for an API. A schema is defined by passing 3 object types: Query, Mutation and Subscription."
 
-Most importantly is how Schema defines all functionalities for an API.
+Most importantly is how Schema defines all functionalities for a GraphQL API.
 
-This is such a powerful difference from REST, and in application, this leads to having to define an implementation of your own app's Schema as such:
+This is the powerful difference between GraphQL and REST. In our application this leads us to have to define the Schema as such:
 
 ```python
 # domains/core/schema.py
@@ -99,21 +101,29 @@ graphql_app = GraphQLRouter(schema)
 
 This will be the base of our GraphQL Schema.
 
-The question now is if there's a way to inject our database references into this Schema, to be used similarly to a Session in the RESTful implementation.
+And just like with REST is there a way to inject our Session references into this endpoint?
 
-Thankfully there is, thanks to FastAPI! Under the [FastAPI section in Integrations, there's a section on context_getter.](https://strawberry.rocks/docs/integrations/fastapi#context_getter):
+Thankfully there is thanks to FastAPI! Under the [FastAPI section in Strawberry Integrations, there's a section on context_getter.](https://strawberry.rocks/docs/integrations/fastapi#context_getter):
 
 > The context_getter option allows you to provide a custom context object that can be used in your resolver. context_getter is a FastAPI dependency and can inject other dependencies if you so wish.
 
-Adding a context to our `GraphQLRouter`, like so:
+We can then add a Session context to our `GraphQLRouter`, like so:
 
 ```python
+# domains/core/graphql/schema.py
+
+from .context import get_context
+
+[...]
+
 graphql_app = GraphQLRouter(schema, context_getter=get_context)
 ```
 
-We can then create this simple `get_context` method:
+Then we can create this simple `get_context` method:
 
 ```python
+# domains/core/graphql/context.py
+
 from fastapi import Depends, Request
 from sqlalchemy.orm import Session
 
@@ -126,7 +136,7 @@ async def get_context(request: Request, db: Session = Depends(get_db)):
     }
 ```
 
-Going back to our previous post, remember that our User query wasn't working because `db` on our resolver was undefined. And previously we could assign it directly in our REST api endpoint, and pass it to our controllers, but in converting them to resolvers we no longer had access to this pattern.
+Going back to our previous post, remember that our User query wasn't working because `db` on our resolver was undefined. Previously we could assign it directly in our various REST endpoints and pass it to our controllers, but in converting them to resolvers we no longer have access to this pattern.
 
 Now that the context is set in the Schema, we can now handle it as such:
 
@@ -146,4 +156,4 @@ class UserQuery:
         return get_all_users(db)
 ```
 
-Now our database session can be passed to the resolver. This also makes it easy to reuse all of your REST controllers, and convert them to be used for a Strawberry GraphQL implementation.
+Now our database Session can be passed to the resolver. This also makes it easy to reuse all of your REST controllers, and convert them to be used for a Strawberry GraphQL implementation.
