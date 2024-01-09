@@ -1,5 +1,5 @@
 ---
-title: Building a FastAPI + Strawberry (Graphql) Backend with Next.js 13 and React Server Components, Pt. 4
+title: Building a FastAPI + Strawberry (Graphql) Backend with Next.js 13 and React Server Components, Pt. 4 - Intro to Next.js 13 and React Server Components
 description: Building out a backend service using fastAPI + Strawberry graphql, Part 4
 tags: graphql,fastapi,python,backend,development,server,nextjs,react,react server components
 date: December 20, 2023
@@ -12,33 +12,37 @@ date: December 20, 2023
 
 ---
 
-I'll be honest, I really started this project hoping to dig much more into FastAPI and Strawberry and add some _Full-stack cred_ to my developer resume. But when I started working on it, instead of opting for my usual Vue3 install, I thought _"hey, might as well try to do a simple frontend using Next.js."_
+I'll be honest, I really started this project hoping to dig much more into FastAPI and Strawberry and add some _fullstack cred_ to my developer resume. But when I started working on it, instead of opting for my usual Vue3 install, I thought _"hey, might as well try to do a simple frontend using Next.js."_
 
-Like you, I've been seeing React Server Components around the ol' interwebs, and have mostly been terrified about seeing what it was all about, but thought to myself that since this would be a small project where I would barely be interested in UI, that it would be a safe place to try the new paradigm out.
+Like you, I've been seeing React Server Components around the ol' interwebs, and have mostly been terrified in it's implementation implications. But I thought to myself that since this would be a small project where I would barely be interested in UI, that it would be a safe place to try the new paradigm out.
 
-**That was a mistake.**
+**_That was a mistake._**
 
-Overall, learning Strawberry has been a million times easier than RSCs.
+Overall, learning Strawberry has been much easier than learning RSCs.
 
-There are typically two ways engineers approach new technology - we either hate it or we love it.
+There are typically two types of engineers - one type loves new technology and the other type hates new technology.
 
-To be fair, the engineers who hate new things hate most new things, and the ones that love new things love most new things. I tend to fall in the former and not the latter.
+I tend to fall in the latter and not the former, mostly because I think that the "move fast and break things" motto of software is a horrible idea that only pushes forward without necessarily contemplating revision and quality.
 
-And even though I tend to scare React Server Components seemed pretty interesting.
+It's like software's late stage capitalism as you buy your 5th Roku TV from Walmart in 3 years.
 
-I've never been a fan of the SSR (Server Side Rendering) solution for frontend frameworks, I just never understood what benefit one would get over using a monolithic app like Laravel or even just PHP (which has become a point of criticism for RSCs, btw).
+And even though I tend to scare from the new React Server Components seemed pretty interesting.
+
+I've never been a fan of the SSR (Server Side Rendering) solution for frontend frameworks, I just never understood what benefit one would get over using a monolithic app like Laravel or even standard PHP (which has become a point of criticism for RSCs, btw).
 
 On the other hand, I've always been a big supporter of SPA (single page applications) because of the fun and tremendous user experience of a web application flipping magically without pages clearing and having to refresh with new content.
 
 But as you may have heard, "SSR is better for SEO" (which is both true and untrue), and drives a lot of innovation for web clients, and tends to push people away from SPA and towards SSR.
 
-RSCs feel like a compromise between these two concepts, so I dove into it for this project.
+RSCs feel like a compromise between these two concepts since it's not fully SSR but it still puts some burden on the server, so I dove into it.
 
 #### Setting Up the Client
 
-Since my main purpose of this project is implementing Strawberry GraphQL, I wanted to make this as easy as possible, so for the client I'll be using [Next.js](https://nextjs.org/) and [Apollo Graphql](https://www.apollographql.com/docs/react/).
+Since my main purpose of this project is implementing Strawberry GraphQL, I wanted to make this as easy as possible, so for the client I'll be using [Apollo Graphql](https://www.apollographql.com/docs/react/).
 
-And since the app is going to be using GraphQL, Typescript is an absolute must. For anyone reading this who _doesn't_ use Typescript because they think that it's a overblown and not useful, I would typically agree, but Typescript matched with GraphQL is brilliant. I would really suggest sticking around for a future article where I can dig more into how well these play together.
+A lot of documentation points at using `fetch` to make calls, but since in application I'm sure a robust application will want to use a library like Apollo I thought it would be vital to make sure they played nice together.
+
+Since the app is going to be using GraphQL Typescript is an absolute must. For anyone reading this who _doesn't_ use Typescript because they think that it's overblown and not useful, I would typically agree, but Typescript matched with GraphQL is brilliant. I would suggest sticking around for a future article where I can dig more into how well these play together.
 
 Typically I am pretty strict about setting a nested Domain application architecture, but [Next.js's folder structure](https://nextjs.org/docs/getting-started/project-structure), just like Vue's or Nuxt's default folder structure, follows a more traditional MVC architecture, where `/pages` are separated from `/components`, etc.
 
@@ -56,9 +60,9 @@ Typically I am pretty strict about setting a nested Domain application architect
 
 It's important to note that each route by default has it's own `page` and `layout`, which I'll leverage for RSCs.
 
-The other very important note are two tags that in the future you will become very very very familiar with: `use client` and `use server`, which you add to the first line of your React files to signify if the file is to be used on the server (RSC) or client ("normal" components).
+The other very important note are two tags that in the future you will become very familiar with: `use client` and `use server`, which you add to the first line of your React files to signify if the file is to be used on the server (RSC) or client ("normal" components).
 
-I haven't had to this yet, but I _imagine_ it would be easy to migrate a React project to RSCs by just adding `use client` to all the files.
+I haven't had to do this yet, but I _imagine_ it would be easy to migrate a React project to RSCs by just adding `use client` to all the files and then slowly migrating data providers, etc, to `use server`.
 
 #### RSCs in Practice
 
@@ -66,8 +70,8 @@ This is where the fun really begins.
 
 I was first confronted to the reality of RSCs when I began implementing a login page for the app. Some questions that caused a crisis of understanding:
 
-* When I submit my credentials to the server from the client (`use client`) and I get the bearer token in response, how do the RSC components get access to that response? The same for vice-versa.
-* When I get a response of data how do the `use client` components communicate that with the RSCs? And vice-versa.
+* When I submit my credentials to the server from the client (`use client`) and I get the bearer token in response, how do the server components get access to that response? The same for vice-versa.
+* When I get a response of data how do the client components communicate that with the server components? And vice-versa.
 
 Obviously, there's a theme here.
 
@@ -81,7 +85,9 @@ While [Next.js recommends general pattern usage for Client components versus Ser
 
 That leads to this [blog post from Apollo Client where they outline how to use an experimental library to make Apollo calls in RSCs](https://www.apollographql.com/blog/apollo-client/next-js/how-to-use-apollo-client-with-next-js-13/).
 
-And unfortunately, Apollo's solution requires a server side Apollo client and a client side Apollo client, with each of the two clients having their own caches.
+And unfortunately, Apollo's solution requires a server side Apollo client and a client side Apollo client, with each of the two clients having their own caches and unable to communicate with each other directly.
+
+Not good.
 
 _Note: I will happily be proven wrong if I'm misunderstanding this document and that there is a way for the cache to communicate across the Client Boundary, but I haven't found it to be possible._
 
