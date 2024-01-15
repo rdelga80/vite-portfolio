@@ -33,20 +33,30 @@ router.afterEach(() => {
 })
 
 router.beforeEach(async (to, from, next) => {
-  const toArticle = await import(`../assets/articles/${to.params.articleSlug}.md`)
+  if (!to.params.articleSlug) {
+    setPageMetaTitle('Ricardo Delgado || Senior Frontend Web Developer')
+    setMeta('description', 'Senior Frontend Web Developer')
+    setMeta('keywords', 'vuejs,reactjs,nextjs,frontend,software,web applications')
+    setMeta('og:title', 'Senior Frontend Web Developer', 'property')
+    setMeta('og:type', 'article', 'property')
 
-  const title = toArticle.attributes.title
-  const description = toArticle.attributes.description
-  const tags = toArticle.attributes.tags
+    next()
+  } else {
+    const toArticle = await import(`../assets/articles/${to.params.articleSlug}.md`)
+  
+    const title = toArticle.attributes.title
+    const description = toArticle.attributes.description
+    const tags = toArticle.attributes.tags
+  
+    setPageMetaTitle(title)
+    setMeta('description', description)
+    setMeta('keywords', tags)
+    setMeta('og:title', title, 'property')
+    setMeta('og:type', 'article', 'property')
+  
+    next()
+  }
 
-  setPageMetaTitle(title)
-  setMeta('description', description)
-  setMeta('keywords', tags)
-  setMeta('og:title', title, 'property')
-  setMeta('og:type', 'article', 'property')
-
-  console.log({ to, from })
-  next()
 })
 
 export default router
