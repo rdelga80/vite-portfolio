@@ -37,6 +37,7 @@ router.beforeEach(async (to, from, next) => {
     setPageMetaTitle('Ricardo Delgado || Senior Frontend Web Developer')
     setMeta('description', 'Senior Frontend Web Developer')
     setMeta('keywords', 'vuejs,reactjs,nextjs,frontend,software,web applications')
+    setMeta('og:description', 'Senior Frontend Web Developer')
     setMeta('og:title', 'Senior Frontend Web Developer', 'property')
     setMeta('og:type', 'article', 'property')
 
@@ -51,6 +52,7 @@ router.beforeEach(async (to, from, next) => {
     setPageMetaTitle(title)
     setMeta('description', description)
     setMeta('keywords', tags)
+    setMeta('og:description', description)
     setMeta('og:title', title, 'property')
     setMeta('og:type', 'article', 'property')
   
