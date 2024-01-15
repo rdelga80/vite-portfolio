@@ -7,7 +7,6 @@ export default {
 <script setup>
 import { onBeforeMount, shallowRef, watch } from 'vue'
 import { truncate } from 'lodash'
-import { setMeta, setPageMetaTitle } from '../assets/helpers'
 
 const props = defineProps({
   articleSlug: {
@@ -38,8 +37,6 @@ const trimSummary = fullText => {
 
 watch(() => props.articleSlug, async (newArticleSlug) => {
   await setArticle(newArticleSlug)
-
-  mountMeta()
 })
 
 const setArticle = async (articleSlug) => {
@@ -51,27 +48,8 @@ const setArticle = async (articleSlug) => {
   })
 }
 
-const mountMeta = () => {
-  return new Promise((res) => {
-    if (!props.isPage) {
-      res()
-    }
-  
-    setMeta('description', articleSummary.value)
-    setMeta('keywords', articleAttributes.value?.tags)
-    setPageMetaTitle(articleAttributes.value?.title)
-    setMeta('og:title', articleAttributes.value?.title, 'property')
-    setMeta('og:type', 'article', 'property')
-    setMeta('og:image', 'https://ricdelgado.com/article-images/nuxt-content-writing-blog-ssr-static.jpg', 'property')
-
-    res()
-  })
-}
-
 onBeforeMount(async () => {
   await setArticle(props.articleSlug)
-
-  return await mountMeta()
 })
 </script>
 
