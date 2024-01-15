@@ -22,3 +22,16 @@ hr {
     end: 2em
   }
 }
+
+blockquote {
+  background: #EEE;
+  border-left: 4px solid gray;
+  margin-inline: {
+    start: 1em;
+    end: 1em;
+  }
+
+  > * {
+    padding: 0.5em;
+  }
+}
