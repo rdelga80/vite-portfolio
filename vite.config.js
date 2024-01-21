@@ -22,7 +22,7 @@ export default defineConfig({
 
         return hljs.highlight(
           str,
-          { language: lang }
+          { language: lang === 'vue' ? 'javascript' : lang }
         ).value
       }
     }
