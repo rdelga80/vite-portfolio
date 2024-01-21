@@ -1,17 +1,22 @@
-pre {
-  background-color: rgb(19, 64, 83);
-  color: white;
-  padding: 12px;
-
-  > code {
-    line-height: 1.5;
-  }
+:where(code):not(pre code) {
+  color: #e0e0e0;
+  background: #2C3E50;
+  padding: 4px;
 }
 
-code {
-  background-color: rgb(19, 64, 83);
-  color: white;
-  padding: 2px;
+pre {
+  color: #e0e0e0;
+  background: #2C3E50;
+  padding: 12px;
+  overflow: scroll;
+
+  code {
+    line-height: 1.5;
+
+    span[class*='hljs-'] {
+      white-space: nowrap;
+    }
+  }
 }
 
 hr {
