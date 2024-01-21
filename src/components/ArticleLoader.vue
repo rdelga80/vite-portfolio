@@ -41,7 +41,7 @@ watch(() => props.articleSlug, async (newArticleSlug) => {
 
 const setArticle = async (articleSlug) => {
   const articleModule = () => import(`../assets/articles/${articleSlug}.md`)
-  return articleModule().then(({ attributes, html, VueComponent }) => {
+  return articleModule().then(async ({ attributes, html, VueComponent }) => {
     article.value = VueComponent
     articleAttributes.value = attributes
     articleSummary.value = trimSummary(html)
