@@ -66,7 +66,7 @@ And in some ways this is totally fine, and probably preferred if you're working 
 
 But since we're here trying to push limits I'm going to try a pattern to not only save an API call but also span the Server Client Boundary (SCB).
 
-Thinking back to the division that's created by the SCD it's important to keep in mind that part of that division has to do with how a built component app behaviors and _hydrates_ components.
+Thinking back to the division that's created by the SCB it's important to keep in mind that part of that division has to do with how a built component app behaviors and _hydrates_ components.
 
 One pattern that we know is true with RSCs is:
 
@@ -134,7 +134,7 @@ By doing this we've successfully gotten the server data into the client portion 
 
 But of course, this is much easier with known strategies.
 
-When discussing it with my team lead earlier this week, he suggested that it could be manually passed into the client side Apollo Client and hydrate the cache to be used from there.
+When discussing it with my team lead earlier this week, he suggested that the data could be manually passed into the client side Apollo Client and hydrate the cache to be used from there.
 
 Instead, for my application, I chose to use Context Providers:
 
