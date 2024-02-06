@@ -36,7 +36,18 @@ blockquote {
     end: 1em;
   }
 
-  > * {
+  > *:not(blockquote) {
     padding: 0.5em;
+
+    &:has(~ blockquote) {
+      margin-bottom: 0;
+    }
+  }
+
+  > blockquote {
+    margin-block-start: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border-left: none;
   }
 }
