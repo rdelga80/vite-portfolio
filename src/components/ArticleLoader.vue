@@ -4,6 +4,7 @@ export default {
 }
 </script>
 
+
 <script setup>
 import { onBeforeMount, shallowRef, watch } from 'vue'
 import { truncate } from 'lodash'
