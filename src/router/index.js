@@ -2,30 +2,32 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import { setMeta, setPageMetaTitle } from '../assets/helpers'
 
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView
+  },
+  {
+    path: '/articles',
+    name: 'articles-home',
+    component: () => import('@/views/ArticlesHome.vue')
+  },
+  {
+    path: '/articles/:articleSlug',
+    name: 'article',
+    component: () => import('@/views/ArticlesArticle.vue')
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: '404',
+    component: () => import('@/views/404.vue')
+  }
+]
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView
-    },
-    {
-      path: '/articles',
-      name: 'articles-home',
-      component: () => import('@/views/ArticlesHome.vue')
-    },
-    {
-      path: '/articles/:articleSlug',
-      name: 'article',
-      component: () => import('@/views/ArticlesArticle.vue')
-    },
-    {
-      path: '/:pathMatch(.*)*',
-      name: '404',
-      component: () => import('@/views/404.vue')
-    }
-  ]
+  routes
 })
 
 router.afterEach(() => {
@@ -61,4 +63,7 @@ router.beforeEach(async (to, from, next) => {
 
 })
 
-export default router
+export {
+  router,
+  routes
+} 

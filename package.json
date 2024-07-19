@@ -2,25 +2,27 @@
   "name": "vite-portfolio",
   "version": "0.0.0",
   "scripts": {
-    "dev": "pnpm i && vite",
-    "build": "vite build",
+    "dev": "yarn install && vite",
+    "build": "vite-ssg build",
     "preview": "vite preview --port 5050",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "sanitize-html": "^2.12.1",
-    "vue": "^3.2.33",
-    "vue-router": "^4.0.14"
+    "sanitize-html": "2.12.1",
+    "vue": "3.2.33",
+    "vue-router": "4.4.0"
   },
   "devDependencies": {
+    "@unhead/vue": "1.9.16",
     "@vitejs/plugin-vue": "2.3.1",
     "eslint": "8.5.0",
     "eslint-plugin-vue": "8.2.0",
-    "highlight.js": "^11.9.0",
+    "highlight.js": "11.9.0",
     "sass": "1.52.1",
     "sass-loader": "13.0.0",
     "vite": "2.9.18",
     "vite-plugin-glob": "0.3.2",
-    "vite-plugin-markdown": "2.1.0"
+    "vite-plugin-markdown": "2.1.0",
+    "vite-ssg": "0.23.8"
   }
 }
