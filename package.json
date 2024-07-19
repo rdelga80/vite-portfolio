@@ -8,6 +8,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "lodash": "4.17.21",
     "sanitize-html": "2.12.1",
     "vue": "3.2.33",
     "vue-router": "4.4.0"
