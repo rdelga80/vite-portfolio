@@ -15,9 +15,7 @@ const articles = getArticles(5)
 <template>
   <div class="home">
     <div v-for="(articleSlug, index) in articles" :key="index">
-      <ClientOnly>
-        <ArticleLoader :article-slug="articleSlug" summary />
-      </ClientOnly>
+      <ArticleLoader :article-slug="articleSlug" summary />
     </div>
   </div>
 </template>
