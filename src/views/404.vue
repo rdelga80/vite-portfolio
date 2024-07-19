@@ -1,9 +1,11 @@
 <template>
-  <div class="four-oh-four-container">
-    <h1>404</h1>
-  
-    <h3>Not Found</h3>
-  </div>
+  <ClientOnly>
+    <div class="four-oh-four-container">
+      <h1>404</h1>
+    
+      <h3>Not Found</h3>
+    </div>
+  </ClientOnly>
 </template>
 
 <style scoped lang="scss">

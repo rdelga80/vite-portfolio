@@ -21,7 +21,9 @@ watch(route, newRoute => {
 
 <template>
   <section class="article-wrap">
-    <ArticleLoader :article-slug="articleSlug" is-page />
+    <ClientOnly>
+      <ArticleLoader :article-slug="articleSlug" is-page />
+    </ClientOnly>
   </section>
 </template>
 

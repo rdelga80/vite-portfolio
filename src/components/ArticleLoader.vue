@@ -1,13 +1,7 @@
-<script>
-export default {
-  name: 'ArticleLoader'
-}
-</script>
-
-
 <script setup>
 import { onBeforeMount, shallowRef, watch } from 'vue'
-import { truncate } from 'lodash'
+import pkg from 'lodash'
+const { truncate } = pkg
 
 const props = defineProps({
   articleSlug: {

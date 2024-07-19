@@ -1,6 +1,6 @@
-import { createRouter, createWebHistory } from 'vue-router'
+// import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import { setMeta, setPageMetaTitle } from '../assets/helpers'
+// import { setMeta, setPageMetaTitle } from '../assets/helpers'
 
 const routes = [
   {
@@ -25,45 +25,45 @@ const routes = [
   }
 ]
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes
-})
+// const router = createRouter({
+//   history: createWebHistory(import.meta.env.BASE_URL),
+//   routes
+// })
 
-router.afterEach(() => {
-  window.scrollTo(0, 0)
-})
+// router.afterEach(() => {
+//   window.scrollTo(0, 0)
+// })
 
-router.beforeEach(async (to, from, next) => {
-  if (!to.params.articleSlug) {
-    setPageMetaTitle('Ricardo Delgado || Senior Frontend Web Developer')
-    setMeta('description', 'Senior Frontend Web Developer')
-    setMeta('keywords', 'vuejs,reactjs,nextjs,frontend,software,web applications')
-    setMeta('og:description', 'Senior Frontend Web Developer')
-    setMeta('og:title', 'Senior Frontend Web Developer', 'property')
-    setMeta('og:type', 'article', 'property')
+// router.beforeEach(async (to, from, next) => {
+//   if (!to.params.articleSlug) {
+//     setPageMetaTitle('Ricardo Delgado || Senior Frontend Web Developer')
+//     setMeta('description', 'Senior Frontend Web Developer')
+//     setMeta('keywords', 'vuejs,reactjs,nextjs,frontend,software,web applications')
+//     setMeta('og:description', 'Senior Frontend Web Developer')
+//     setMeta('og:title', 'Senior Frontend Web Developer', 'property')
+//     setMeta('og:type', 'article', 'property')
 
-    next()
-  } else {
-    const toArticle = await import(`../assets/articles/${to.params.articleSlug}.md`)
+//     next()
+//   } else {
+//     const toArticle = await import(`../assets/articles/${to.params.articleSlug}.md`)
   
-    const title = toArticle.attributes.title
-    const description = toArticle.attributes.description
-    const tags = toArticle.attributes.tags
+//     const title = toArticle.attributes.title
+//     const description = toArticle.attributes.description
+//     const tags = toArticle.attributes.tags
   
-    setPageMetaTitle(title)
-    setMeta('description', description)
-    setMeta('keywords', tags)
-    setMeta('og:description', description)
-    setMeta('og:title', title, 'property')
-    setMeta('og:type', 'article', 'property')
+//     setPageMetaTitle(title)
+//     setMeta('description', description)
+//     setMeta('keywords', tags)
+//     setMeta('og:description', description)
+//     setMeta('og:title', title, 'property')
+//     setMeta('og:type', 'article', 'property')
   
-    next()
-  }
+//     next()
+//   }
 
-})
+// })
 
 export {
-  router,
+  // router,
   routes
 } 
