@@ -1,7 +1,7 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import ASidebar from '@/components/ASidebar.vue'
-import { onMounted } from 'vue';
+import { onMounted } from 'vue'
 
 onMounted(() => {
   if (!import.meta.env.DEV) {
@@ -31,13 +31,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container">
-    <main class="main">
-      <RouterView />
-    </main>
-
-    <ASidebar class="sidebar" />
-  </div>
+  <ClientOnly>
+    <div class="container">
+      <main class="main">
+        <RouterView />
+      </main>
+  
+      <ASidebar class="sidebar" />
+    </div>
+  </ClientOnly>
 </template>
 
 <style lang="scss" scoped>
