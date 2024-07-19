@@ -7,7 +7,6 @@ export default {
 
 <script setup>
 import { onBeforeMount, shallowRef, watch } from 'vue'
-import { truncate } from 'lodash'
 
 const props = defineProps({
   articleSlug: {
@@ -30,10 +29,7 @@ const trimSummary = fullText => {
     ? fullText.slice(hrIndex).replace('<hr>', '')
     : fullText
 
-  return truncate(textToTruncate, {
-    length: 500,
-    separator: ' '
-  })
+  return textToTruncate.substring(0, 500)
 }
 
 watch(() => props.articleSlug, async (newArticleSlug) => {
