@@ -32,6 +32,9 @@ export default defineConfig({
       '@': fileURLToPath(srcPath)
     }
   },
+  ssgOptions: {
+    includeAllRoutes: true
+  },
   css: {
     preprocessorOptions: {
       scss: {

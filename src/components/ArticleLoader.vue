@@ -73,6 +73,10 @@ useHead({
     {
       name: 'keywords',
       content: articleAttributes.value?.tags
+    },
+    {
+      name: 'article:published_time',
+      content: new Date(articleAttributes.value?.date).toLocaleDateString('en-CA')
     }
   ]
 })
