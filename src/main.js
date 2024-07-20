@@ -5,8 +5,5 @@ import './assets/scss/global.scss'
 
 export const createApp = ViteSSG(
   App,
-  { routes },
-  ({ app, router, routes, isClient, initialState }) => {
-    console.log({ app, router, routes, isClient, initialState })
-  }
+  { routes }
 )

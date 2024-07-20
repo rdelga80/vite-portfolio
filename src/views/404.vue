@@ -1,11 +1,15 @@
+<script>
+export default {
+  name: '404Page',
+}
+</script>
+
 <template>
-  <ClientOnly>
-    <div class="four-oh-four-container">
-      <h1>404</h1>
-    
-      <h3>Not Found</h3>
-    </div>
-  </ClientOnly>
+  <div class="four-oh-four-container">
+    <h1>404</h1>
+  
+    <h3>Not Found</h3>
+  </div>
 </template>
 
 <style scoped lang="scss">
