@@ -10,7 +10,6 @@ import { useRoute } from 'vue-router'
 import ArticleLoader from '../components/ArticleLoader.vue'
 import { ref, watch } from 'vue'
 
-
 const route = useRoute()
 const articleSlug = ref(route.params.articleSlug)
 

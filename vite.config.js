@@ -33,7 +33,25 @@ export default defineConfig({
     }
   },
   ssgOptions: {
-    includeAllRoutes: true
+    includeAllRoutes: true,
+    includedRoutes(paths, routes) {
+      const getSlug = url => url.split('/').at(-1).replace('.md', '')
+      const articlesByGlob = import.meta.importGlob('../assets/articles/**.md')
+
+      const articleTitles = Object
+        .keys(articlesByGlob)
+
+      const articles = articleTitles
+        .reverse()
+        .slice(0, articleTitles.length)
+        .map(glob => getSlug(glob))
+
+      return routes.flatMap(async (route) => {
+        return route.name === 'article'
+          ? articles.map(slug => `/article/${slug}`)
+          : route.path
+      })
+    }
   },
   css: {
     preprocessorOptions: {
