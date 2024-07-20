@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: '404Page',
+}
+</script>
+
 <template>
   <div class="four-oh-four-container">
     <h1>404</h1>

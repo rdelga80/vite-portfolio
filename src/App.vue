@@ -1,33 +1,6 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import ASidebar from '@/components/ASidebar.vue'
-import { onMounted } from 'vue';
-
-onMounted(() => {
-  if (!import.meta.env.DEV) {
-    if (!document.querySelector('#g-tag-script')) {
-      const gTagScript = document.createElement('script')
-      gTagScript.setAttribute('id', 'g-tag-script')
-      gTagScript.setAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=G-S19L4H8YY5')
-      gTagScript.setAttribute('async', '')
-      document.body.appendChild(gTagScript)
-    }
-
-
-    if (!document.querySelector('#g-tag-data-layer')) {
-      const gTagDataLayer = document.createElement('script')
-      gTagDataLayer.setAttribute('id', 'g-tag-data-layer')
-      gTagDataLayer.text = `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-  
-        gtag('config', 'G-S19L4H8YY5');
-      `
-      document.body.appendChild(gTagDataLayer)
-    }
-  }
-})
 </script>
 
 <template>
