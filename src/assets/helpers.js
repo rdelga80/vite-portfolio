@@ -3,7 +3,7 @@ import sanitizeHtml from 'sanitize-html'
 export const getSlug = url => url.split('/').at(-1).replace('.md', '')
 
 export const getArticles = sliceLength => {
-  const articlesByGlob = import.meta.importGlob('../assets/articles/**.md')
+  const articlesByGlob = import.meta.glob('../assets/articles/**.md')
 
   const articleTitles = Object
     .keys(articlesByGlob)

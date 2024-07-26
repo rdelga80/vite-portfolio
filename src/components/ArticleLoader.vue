@@ -1,8 +1,6 @@
 <script setup>
 import { onBeforeMount, shallowRef, watch } from 'vue'
-import { useRoute } from 'vue-router'
 import pkg from 'lodash'
-import { useHead } from '@unhead/vue'
 const { truncate } = pkg
 
 const props = defineProps({
@@ -47,34 +45,6 @@ const setArticle = async (articleSlug) => {
 
 onBeforeMount(async () => {
   await setArticle(props.articleSlug)
-})
-
-const route = useRoute()
-const isHome = route.name === 'home'
-useHead({
-  title: () => isHome? undefined : articleAttributes.value?.title,
-  meta: () => isHome? undefined :  [
-    {
-      name: 'og:title',
-      content: articleAttributes.value?.title
-    },
-    {
-      name: 'description',
-      content: articleAttributes.value?.description
-    },
-    {
-      name: 'og:description',
-      content: articleAttributes.value?.description
-    },
-    {
-      name: 'og:image',
-      content: articleAttributes.value?.image
-    },
-    {
-      name: 'keywords',
-      content: articleAttributes.value?.tags
-    }
-  ]
 })
 </script>
 

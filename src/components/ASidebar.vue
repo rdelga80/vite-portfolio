@@ -1,9 +1,3 @@
-<script>
-export default {
-  name: 'ASidebar'
-}
-</script>
-
 <script setup>
 import ArticleLoader from './ArticleLoader.vue'
 import { getArticles } from '@/assets/helpers.js'
