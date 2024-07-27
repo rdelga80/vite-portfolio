@@ -8,7 +8,7 @@ const articles = getArticles(5)
 <template>
   <aside class="sidebar">
     <div class="sidebar-title">
-      <router-link to="/">
+      <!-- <router-link to="/"> -->
         <h1>
           Ricardo Delgado
         </h1>
@@ -16,7 +16,7 @@ const articles = getArticles(5)
         <div class="sub-title">
             Senior Frontend Web Developer
           </div>
-      </router-link>
+      <!-- </router-link> -->
     </div>
 
     <h6>
@@ -47,9 +47,9 @@ const articles = getArticles(5)
       </div>
     </div>
 
-    <RouterLink to="/articles">
+    <!-- <RouterLink to="/articles">
       <h4>All Articles →</h4>
-    </RouterLink>
+    </RouterLink> -->
   </aside>
 </template>
 

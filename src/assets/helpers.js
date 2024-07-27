@@ -1,4 +1,5 @@
-import sanitizeHtml from 'sanitize-html'
+import pkg from 'lodash'
+const { truncate } = pkg
 
 export const getSlug = url => url.split('/').at(-1).replace('.md', '')
 
@@ -14,35 +15,21 @@ export const getArticles = sliceLength => {
     .map(glob => getSlug(glob))
 }
 
-export const setMeta = (metaKey, value, nameOrProperty = 'name') => {
-  if (!window) {
-    return
-  }
-  
-  const meta = document.querySelector(`meta[${nameOrProperty}="${metaKey}"]`)
+export const getArticle = async (slug) => {
+  const article = await import(`../assets/articles/${slug}.md`)
 
-  if (meta) {
-    meta.setAttribute('content', sanitizeHtml(value, {
-      allowedTags: []
-    }))
-  } else {
-    const headTag = document.getElementsByTagName('head')[0]
-
-    const metaTag = document.createElement('meta')
-
-    metaTag.setAttribute(nameOrProperty, metaKey)
-    metaTag.setAttribute('content', sanitizeHtml(value, {
-      allowedTags: []
-    }))
-
-    headTag.appendChild(metaTag)
-  }
+  return article
 }
 
-export const setPageMetaTitle = (title) => {
-  if (!window) {
-    return
-  }
+export const trimSummary = fullText => {
+  const hrIndex = fullText.indexOf('<hr')
+  
+  const textToTruncate = hrIndex > -1
+    ? fullText.slice(hrIndex).replace('<hr>', '')
+    : fullText
 
-  document.title = `${title} || Ricardo Delgado Web Dev`
+  return truncate(textToTruncate, {
+    length: 500,
+    separator: ' '
+  })
 }

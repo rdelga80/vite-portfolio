@@ -1,11 +1,17 @@
 <script setup>
 import ASidebar from '@/components/ASidebar.vue'
+import ArticleLoader from '@/components/ArticleLoader.vue'
+import { getArticles } from '@/assets/helpers.js'
+
+const articles = getArticles(5)
 </script>
 
 <template>
   <div class="container">
     <main class="main">
-      Test
+      <div v-for="(articleSlug, index) in articles" :key="index">
+        <ArticleLoader :article-slug="articleSlug" summary />
+      </div>
     </main>
 
     <ASidebar class="sidebar" />

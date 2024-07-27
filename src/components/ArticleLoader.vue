@@ -1,6 +1,7 @@
 <script setup>
-import { onBeforeMount, shallowRef, watch } from 'vue'
+import { shallowRef } from 'vue'
 import pkg from 'lodash'
+import { onRenderClient } from '@/renderer/+onRenderClient'
 const { truncate } = pkg
 
 const props = defineProps({
@@ -30,10 +31,6 @@ const trimSummary = fullText => {
   })
 }
 
-watch(() => props.articleSlug, async (newArticleSlug) => {
-  await setArticle(newArticleSlug)
-})
-
 const setArticle = async (articleSlug) => {
   const articleModule = () => import(`../assets/articles/${articleSlug}.md`)
   return articleModule().then(async ({ attributes, html, VueComponent }) => {
@@ -43,27 +40,25 @@ const setArticle = async (articleSlug) => {
   })
 }
 
-onBeforeMount(async () => {
-  await setArticle(props.articleSlug)
-})
+setArticle(props.articleSlug)
 </script>
 
 <template>
   <article class="article">
-    <router-link v-if="summary" :to="{ name: 'article', params: { articleSlug } }">
+    <!-- <router-link v-if="summary" :to="{ name: 'article', params: { articleSlug } }">
       <h2 class="article-title">
         {{ articleAttributes?.title }}
       </h2>
-    </router-link>
+    </router-link> -->
 
-    <router-link
+    <!-- <router-link
       v-else-if="short"
       class="short-link"
       :to="{ name: 'article', params: { articleSlug } }">
       {{ articleAttributes?.title }}
-    </router-link>
+    </router-link> -->
 
-    <h2 class="article-title" v-else>
+    <h2 class="article-title">
       {{ articleAttributes?.title }}
     </h2>
 
@@ -82,9 +77,9 @@ onBeforeMount(async () => {
     </div>
 
     <div class="more">
-      <router-link v-if="summary" :to="{ name: 'article', params: { articleSlug } }">
+      <!-- <router-link v-if="summary" :to="{ name: 'article', params: { articleSlug } }">
         Read More...
-      </router-link>
+      </router-link> -->
     </div>
   </article>
 </template>
