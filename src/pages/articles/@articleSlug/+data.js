@@ -4,6 +4,7 @@ export { data }
 
 async function data(pageContext) {
   const articleSlug = pageContext.routeParams.articleSlug
+  console.log({ articleSlug })
 
   const articleModule = await import(`../../../assets/articles/${articleSlug}.md`)
 

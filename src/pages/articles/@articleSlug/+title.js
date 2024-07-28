@@ -1,6 +1,6 @@
 export function title(pageContext) {
   const data = pageContext.data
 
-  return `Ricardo Delgado - Web Developer | ${data.attributes.title}`
+  return `Ricardo Delgado - Frontend Developer | ${data.attributes.title}`
 }
 

@@ -1,7 +1,8 @@
 <script setup>
 import { shallowRef } from 'vue'
 import pkg from 'lodash'
-import { onRenderClient } from '@/renderer/+onRenderClient'
+import ALink from './ALink.vue'
+import { articleSlugToLink } from '@/assets/helpers'
 const { truncate } = pkg
 
 const props = defineProps({
@@ -45,22 +46,11 @@ setArticle(props.articleSlug)
 
 <template>
   <article class="article">
-    <!-- <router-link v-if="summary" :to="{ name: 'article', params: { articleSlug } }">
+    <ALink :href="articleSlugToLink(articleSlug)">
       <h2 class="article-title">
         {{ articleAttributes?.title }}
       </h2>
-    </router-link> -->
-
-    <!-- <router-link
-      v-else-if="short"
-      class="short-link"
-      :to="{ name: 'article', params: { articleSlug } }">
-      {{ articleAttributes?.title }}
-    </router-link> -->
-
-    <h2 class="article-title">
-      {{ articleAttributes?.title }}
-    </h2>
+    </ALink>
 
     <span v-if="!short" class="article-date">
       {{ articleAttributes?.date }}
@@ -77,9 +67,9 @@ setArticle(props.articleSlug)
     </div>
 
     <div class="more">
-      <!-- <router-link v-if="summary" :to="{ name: 'article', params: { articleSlug } }">
+      <ALink v-if="summary" :href="articleSlugToLink(articleSlug)">
         Read More...
-      </router-link> -->
+      </ALink>
     </div>
   </article>
 </template>

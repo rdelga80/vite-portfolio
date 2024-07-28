@@ -6,4 +6,9 @@ const { attributes } = useData()
 
 <template>
   <meta name="description" :content="attributes.description" />
+  <meta name="keywords" :content="attributes.tags" />
+  <meta name="og:description" :content="attributes.description" />
+  <meta property="og:title" :content="`Ricardo Delgado - Frontend Developer | ${attributes.title}`" />
+  <meta property="og:image" content="https://ricdelgado.com/article-images/nuxt-content-writing-blog-ssr-static.jpg" />
+  <meta property="og:image:type" content="image/jpg" />
 </template>

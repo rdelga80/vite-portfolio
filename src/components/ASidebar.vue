@@ -1,14 +1,34 @@
 <script setup>
-import ArticleLoader from './ArticleLoader.vue'
-import { getArticles } from '@/assets/helpers.js'
+import { ref } from 'vue'
+import ALink from './ALink.vue'
+import { articleSlugToLink, getArticle, getArticles } from '@/assets/helpers.js'
 
 const articles = getArticles(5)
+
+const articleLinks = ref([])
+
+const fetchArticles = () => {
+  articles.forEach(async (articleSlug) => {
+    const { attributes } = await getArticle(articleSlug)
+    const { title } = attributes
+
+    articleLinks.value = [
+      ...articleLinks.value,
+      {
+        link: articleSlugToLink(articleSlug),
+        title
+      }
+    ]
+  })
+}
+
+fetchArticles()
 </script>
 
 <template>
   <aside class="sidebar">
     <div class="sidebar-title">
-      <!-- <router-link to="/"> -->
+      <ALink href="/">
         <h1>
           Ricardo Delgado
         </h1>
@@ -16,7 +36,7 @@ const articles = getArticles(5)
         <div class="sub-title">
             Senior Frontend Web Developer
           </div>
-      <!-- </router-link> -->
+      </ALink>
     </div>
 
     <h6>
@@ -42,14 +62,14 @@ const articles = getArticles(5)
         Recent Articles
       </h4>
 
-      <div v-for="(article, index) in articles" :key="index">
-        <ArticleLoader :article-slug="article" short />
-      </div>
+      <ALink class="small" v-for="article in articleLinks" :href="article.link" :key="article.link">
+        {{ article.title }}
+      </ALink>
     </div>
 
-    <!-- <RouterLink to="/articles">
+    <ALink href="/articles">
       <h4>All Articles →</h4>
-    </RouterLink> -->
+    </ALink>
   </aside>
 </template>
 

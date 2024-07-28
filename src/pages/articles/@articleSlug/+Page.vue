@@ -1,16 +1,29 @@
 <script setup>
 import { getArticle } from '@/assets/helpers'
 import { useData } from 'vike-vue/useData'
-import { shallowRef } from 'vue'
+import { computed, shallowRef, watch, ref } from 'vue'
+import { usePageContext } from 'vike-vue/usePageContext'
 
-const { articleSlug, attributes } = useData()
+const { articleSlug } = useData()
+
+const pageContext = usePageContext()
+const articleParams = computed(() => pageContext.routeParams.articleSlug)
+
+watch(articleParams, param => {
+  setArticle(param)
+})
+
+const attributes = ref('')
+const setArticle = (slugToGet) => {
+  getArticle(slugToGet)
+    .then((data) => {
+      article.value = data.VueComponent
+      attributes.value = data.attributes
+    })
+}
 
 const article = shallowRef()
-
-getArticle(articleSlug)
-  .then((data) => {
-    article.value = data.VueComponent
-  })
+setArticle(articleSlug)
 </script>
 
 <template>
