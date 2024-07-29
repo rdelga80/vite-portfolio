@@ -29,6 +29,18 @@ setArticle(articleSlug)
 <template>
   <h2>{{ attributes.title }}</h2>
 
+  <figure class="figure" v-if="attributes.image">
+    <div class="image-wrapper">
+      <img class="article-img" :src="attributes.image" />
+    </div>
+
+    <figcaption class="caption">
+      <a v-if="attributes.imageAuthor && attributes.imageAttribution" :href="attributes.imageAttribution">
+        {{ attributes.imageAuthor }} - {{ attributes.imageAttribution }}
+      </a>
+    </figcaption>
+  </figure>
+
   <section class="article-wrap">
     <component :is="article" />
   </section>
@@ -47,5 +59,30 @@ setArticle(articleSlug)
   @extend %article-wrap;
 
   padding-right: var(--padding-right);
+}
+
+.figure {
+  height: 300px;
+  margin: {
+    left: 0;
+    right: 0;
+    bottom: 40px;
+  }
+}
+
+.image-wrapper {
+  height: 300px;
+  overflow: hidden;
+}
+
+.article-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.caption {
+  font-size: 0.7em;
 }
 </style>
