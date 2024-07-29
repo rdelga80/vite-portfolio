@@ -39,9 +39,9 @@ fetchArticles()
       </ALink>
     </div>
 
-    <h6>
+    <div>
       email: ric [at] ricdelgado.com
-    </h6>
+    </div>
 
     <div class="methods">
       <p>
