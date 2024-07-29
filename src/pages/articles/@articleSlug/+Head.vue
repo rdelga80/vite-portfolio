@@ -14,4 +14,5 @@ const { attributes } = useData()
   <meta property="og:image:type" content="image/webp" />
   <meta property="og:image" :content="attributes.image" />
   <meta property="article:published_time" :content="new Date(attributes.date).toLocaleDateString('en-CA')" />
+  <meta name="author" content="Ricardo Delgado" />
 </template>
