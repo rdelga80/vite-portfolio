@@ -21,7 +21,7 @@ export const getArticle = async (slug) => {
   return article
 }
 
-export const articleSlugToLink = (slug) => `/articles/${slug}`
+export const articleSlugToLink = (slug) => `/articles/${slug}/`
 
 export const trimSummary = fullText => {
   const hrIndex = fullText.indexOf('<hr')
