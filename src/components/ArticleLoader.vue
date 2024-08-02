@@ -1,5 +1,5 @@
 <script setup>
-import { shallowRef } from 'vue'
+import { shallowRef, watch } from 'vue'
 import pkg from 'lodash'
 import ALink from './ALink.vue'
 import { articleSlugToLink } from '@/assets/helpers'
@@ -42,6 +42,8 @@ const setArticle = async (articleSlug) => {
 }
 
 setArticle(props.articleSlug)
+
+watch(() => props.articleSlug, newSlug => setArticle(newSlug))
 </script>
 
 <template>
@@ -76,13 +78,11 @@ setArticle(props.articleSlug)
 
 <style lang="scss" scoped>
 .article {
-  :deep {
-    img {
-      width: 100%;
-    }
-    pre {
-      white-space: pre-wrap;
-    }
+  :deep(img) {
+    width: 100%;
+  }
+  :deep(pre) {
+    white-space: pre-wrap;
   } 
 }
 

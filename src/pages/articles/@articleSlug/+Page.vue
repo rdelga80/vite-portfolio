@@ -59,6 +59,10 @@ setArticle(articleSlug)
   @extend %article-wrap;
 
   padding-right: var(--padding-right);
+
+  &:deep(p > img) {
+    width: 100%;
+  }
 }
 
 .figure {

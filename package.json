@@ -13,8 +13,7 @@
     "vike": "0.4.181",
     "vike-vue": "0.7.6",
     "vite": "5.3.5",
-    "vue": "3.4.34",
-    "vue-router": "4.4.0"
+    "vue": "3.4.34"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "2.3.1",
