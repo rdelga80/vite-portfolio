@@ -262,12 +262,10 @@ async function data(pageContext) {
 
   const articleModule = await import(`../../../assets/articles/${articleSlug}.md`)
 
-  const { VueComponent, attributes, html } = articleModule
+  const { attributes, html } = articleModule
   const summary = html
 
-  console.log({ VueComponent })
   return {
-    VueComponent,
     articleSlug,
     attributes,
     summary
@@ -277,4 +275,43 @@ async function data(pageContext) {
 
 This then becomes usable in `+Page.vue` component:
 
+```javascript
+const { articleSlug } = useData()
+```
 
+Or `+Head.vue`:
+
+```javascript
+const { attributes } = useData()
+```
+
+Which is then used to populate out data as needed.
+
+For example, `+Head.vue` becomes:
+
+```vue
+<script setup>
+import { useData } from 'vike-vue/useData'
+
+const { attributes } = useData()
+</script>
+
+<template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" :content="attributes.description" />
+  <meta name="keywords" :content="attributes.tags" />
+  <meta name="og:description" :content="attributes.description" />
+  <meta property="og:title" :content="`Ricardo Delgado - Frontend Developer | ${attributes.title}`" />
+  <meta property="og:type" content="article" />
+  <meta property="og:image:type" content="image/webp" />
+  <meta property="og:image" :content="attributes.image" />
+  <meta property="article:published_time" :content="new Date(attributes.date).toLocaleDateString('en-CA')" />
+  <meta name="author" content="Ricardo Delgado" />
+</template>
+```
+
+One thing that I wish could work would be for the `+data.js` helper to pass the `VueComponent` that the `articleModule` returns to the `+Page.vue` component instead of just the article slug (which then re-imports the markdown file on the client side).
+
+But then I think we're tip-toeing into React Server Components and that's a whole different article!
+
+But for now Vike fosters a very simple and easy transition from SPA to SSG, and I'd definitely recommend it for smaller sized projects that don't want to carry Nuxt.
