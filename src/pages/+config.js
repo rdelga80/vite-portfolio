@@ -1,5 +1,6 @@
 import vikeVue from 'vike-vue/config'
 
 export default {
-  extends: [vikeVue]
+  prerender: true,
+  extends: [vikeVue],
 }

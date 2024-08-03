@@ -8,7 +8,7 @@ export const getArticles = sliceLength => {
 
   const articleTitles = Object
     .keys(articlesByGlob)
-
+  
   return articleTitles
     .reverse()
     .slice(0, sliceLength || articleTitles.length)

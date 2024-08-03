@@ -1,11 +1,24 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import ALink from './ALink.vue'
 import { articleSlugToLink, getArticle, getArticles } from '@/assets/helpers.js'
 
 const articles = getArticles(5)
 
+const getArticleNumber = (link) => Number(link.replace('/articles/','').substring(0, 2))
+
 const articleLinks = ref([])
+const articlesInOrder = computed(() => {
+  const orderedLinks = [...articleLinks.value]
+    ?.sort((a, b) => {
+      const aArticleNum = getArticleNumber(a.link)
+      const bArticleNum = getArticleNumber(b.link)
+
+      return bArticleNum - aArticleNum
+    }) 
+
+  return orderedLinks
+})
 
 const fetchArticles = () => {
   articles.forEach(async (articleSlug) => {
@@ -62,7 +75,7 @@ fetchArticles()
         Recent Articles
       </h4>
 
-      <ALink class="small" v-for="article in articleLinks" :href="article.link" :key="article.link">
+      <ALink class="small" v-for="article in articlesInOrder" :href="article.link" :key="article.link">
         {{ article.title }}
       </ALink>
     </div>

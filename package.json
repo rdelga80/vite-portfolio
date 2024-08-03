@@ -1,6 +1,7 @@
 {
   "name": "vite-portfolio",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "yarn install && vite",
     "build": "vite build",

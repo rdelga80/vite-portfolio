@@ -22,7 +22,7 @@ const articleSummary = shallowRef(null)
 const trimSummary = fullText => {
   const hrIndex = fullText.indexOf('<hr')
   
-  const textToTruncate = hrIndex > -1
+  const textToTruncate = hrIndex > -1 && hrIndex < 8000
     ? fullText.slice(hrIndex).replace('<hr>', '')
     : fullText
 
@@ -33,7 +33,7 @@ const trimSummary = fullText => {
 }
 
 const setArticle = async (articleSlug) => {
-  const articleModule = () => import(`../assets/articles/${articleSlug}.md`)
+  const articleModule = () => import(`@/assets/articles/${articleSlug}.md`)
   return articleModule().then(async ({ attributes, html, VueComponent }) => {
     article.value = VueComponent
     articleAttributes.value = attributes

@@ -1,30 +1,28 @@
 ---
 title: Converting My Portfolio to Vike SSG
-description: Converting my Protfolio from a Vite-Vue SPA to a Vite-Vue-Vike SSG
+description: Converting my Portfolio from a Vite-Vue SPA to a Vite-Vue-Vike SSG
 tags: vite,vike,static site generation,server side rendering,nuxt
-date: August 1, 2024
+date: August 5, 2024
 image: https://firebasestorage.googleapis.com/v0/b/portfolio-images-580ff.appspot.com/o/vike-ssg-ssr-vue_588x441.webp?alt=media&token=7868c67a-e8dd-4338-a0f9-551a6b456c67
 imageAuthor: Jozsef Hocza
 imageAttribution: https://unsplash.com/@hocza
 ---
 
-It has always bothered me that when I share a post from this site the metadata was always the same thing and never gave any information for what the actual article was about.
+It has always bothered me that when I share a post from this site the metadata wasn't dynamic because of the nature of Single Page Applications (SPA).
 
-Not only was this not the best way to promote my posts but it's also pretty bad for my lighthouse scores, which have apparently become increasingly important for frontend development.
-
-![Lighthouse Scores for ricdelgado.com as an SPA](https://firebasestorage.googleapis.com/v0/b/portfolio-images-580ff.appspot.com/o/article-21%2Flighthouse-rd-spa.png?alt=media&token=d35e89a0-e2b1-4181-b53c-1ec5ed80ef11)
+This isn't best way to promote my posts and it's also pretty bad for my SEO scores in general, including lighthouse which is becoming an ever increasingly used metric for frontend development (to a detriment).
 
 I tried some hacky solutions like programmatically adjusting `meta` tags in the `head` on navigation but unfortunately that solution doesn't work for creating links for services like LinkedIn and Facebook.
 
 ## Static Site Generation (SSG)
 
-The simplest path forward is to migrate to an SSG, which was something I'd always tried to avoid because of all the weight that comes with using various frameworks.
+The simplest path forward is to migrate to an SSG. I'd always tried to avoid this because of all the weight that comes with using various frameworks, so I thought I'd dig in to see what alternatives there are.
 
 ### Nuxt
 
-In Vue-land one can't bring up advanced functionality like SSG or Server Side Rendering without mentioning [Nuxt](https://nuxt.com/).
+In Vue-land one can't bring up advanced functionality like SSG or Server Side Rendering (SSR) without mentioning [Nuxt](https://nuxt.com/).
 
-Nuxt, the self-described "Intuitive Vue Framework" is the go to to build out fully robust Vue applications.
+Nuxt, the self-described _Intuitive Vue Framework_, is the industry standard to build out fully robust Vue applications.
 
 Some of it's features:
 
@@ -34,13 +32,13 @@ Some of it's features:
 * Middleware
 * Authorization
 * State management
-* Content handling on markdown files (similar to this site!)
+* Content handling via markdown files (similar to this site!)
 
 But most importantly for the purposes of this post, Static Site Generation and Server Side Rendering.
 
 But for my purposes I chose not to go with Nuxt.
 
-One of the major reasons was during the transition from Vue2 and Vue3, Nuxt lagged very far behind on releasing their Vue3 implementation, which is a price I wouldn't like to pay for in the future.
+One of the major reasons was during the transition from Vue2 and Vue3, Nuxt lagged very far behind on releasing their Vue3 implementation, and that's a price I wouldn't like to pay for in the future.
 
 Otherwise, using Nuxt on this site would be overkill.
 
@@ -48,11 +46,13 @@ For the most part this site operates on one view/layout and 3 different types of
 
 Nuxt just wouldn't be the right solution here.
 
+Plus, why have your own portfolio site if not to experiment with various solutions.
+
 ### Vite-SSG
 
-Choosing to go with a lighter weight handling of SSG, I tried out [Antfu Collective's Vite SSG](https://github.com/antfu-collective/vite-ssg).
+Choosing to go with a lighter weight handling of SSG, I initially tried out [Antfu Collective's Vite SSG library](https://github.com/antfu-collective/vite-ssg).
 
-What mostly stood out to me what that it seemed like it would be easy to implement by only needing to change my `main.js` page to be:
+Vite-SSG stood out due to it's apparently easy implementation, which only needed a slight change to `main.js`:
 
 ```javascript
 // src/main.ts
@@ -71,6 +71,8 @@ export const createApp = ViteSSG(
   },
 )
 ```
+
+_Example from Antfu's Github_
 
 After that, updating `meta` tags would be handled by [Unhead's useHead() hook](https://unhead.unjs.io/):
 
@@ -94,11 +96,13 @@ useHead({
 </script>
 ```
 
-I was hopeful that this would work, but I encountered a few problems with how Vite-SSG interacted with `vite-plugin-markdown`, the plugin I'm using to import markdown files into Vue components to automatically turn them into articles.
+_Example from Antfu's Github_
 
-With `vite-plugin-markdown` I'm able to import markdown files dynamically by watching route changes, something like this:
+I was hopeful that this would work but I encountered a few problems with how Vite-SSG interacted with `vite-plugin-markdown`, the plugin I'm using to import markdown files into Vue components to automatically turn them into articles.
 
-```vue
+With `vite-plugin-markdown` I'm able to import markdown files dynamically by watching route changes:
+
+```javascript
 import { shallowRef, watch } from 'vue'
 
 const article = shallowRef(null)
@@ -119,17 +123,17 @@ setArticle(props.articleSlug)
 watch(() => props.articleSlug, newSlug => setArticle(newSlug))
 ```
 
-Using Vue's ability to dynamically import files is probably my number one reason why I prefer ot to React, but that's a different article.
+Using Vue's ability to dynamically import files is probably my number one reason why I prefer it to React but that's a different article.
 
 Vite-SSG's ability to generate routes was unfortunately not able to take my dynamic page and convert it to static generated routes on build.
 
-This was even after following the instructions for [custom routes to render](https://github.com/antfu-collective/vite-ssg?tab=readme-ov-file#custom-routes-to-render), which built out the pages but wasn't able to load the data in a way that was able update `metadata` for url readers to garner updated info from.
+This was even after following the instructions for [custom routes to render](https://github.com/antfu-collective/vite-ssg?tab=readme-ov-file#custom-routes-to-render). The routes may have built out the pages but the data didn't update in a way that allowed links to show the correct `metadata` for the articles.
 
 ### Vike
 
 I'm not going to lie, this wasn't the first time I'd taken a look at Vike but I'd never tried to implement it because it didn't seem all that friendly.
 
-In retrospect after going through the migration process I would say that their documentation isn't as friendly as I personally would like. And by like, I mean being overly explicit with directions and details, which I know not every developer needs but can be a tough bar of entry for some.
+In retrospect after going through the migration process I would say that their documentation isn't as friendly as I personally would like. Often times they aren't overly explicit with directions and details, so it added some extra time trying to figure out what they're getting at in a particular section of the docs.
 
 A year ago I don't think I would've been able to make it through this implementation but it's amazing what a year of developer experience can bring to your toolbelt.
 
@@ -146,28 +150,23 @@ My portfolio has a fairly simple routing structure:
 
 Previously I would use Vue-Router to grab the slug and dynamically import the markdown article and use Vue's magical dynamic `<component>` helper to render the imported markdown.
 
-Out of the box Vike works different which allows me to make a tweak or two on this functionality.
+Out of the box Vike works differently which allows me to make a tweak or two on this functionality.
 
 [Vike recommends not using Vue-Router](https://vike.dev/vue-router) which makes sense for an SSG/SSR site.
 
 This also is important for the eventual page building process that Vite-SSG failed at.
 
-Additionally, Vike has some structure pages that direct a developer in more of a Domain Driven Design direction, which means that my site architecture will follow a pattern similar to this:
+Additionally, Vike has an opinionated structure that directs a developer in more of a Domain-Driven Design, which means that my site architecture will follow a pattern similar to this:
 
 ```
 /src
   /pages
-    +Page.vue
     +Layout.vue
     +Head.vue
     +title.js
     +data.js
     /index
       +Page.vue
-      +Layout.vue
-      +Head.vue
-      +title.js
-      +data.js
     /subPage # route-based
       +Page.vue
       +Layout.vue
@@ -184,11 +183,11 @@ This is where the rendered page component, aka view in other frameworks, live.
 
 This is the layout component for this route tree.
 
-As a developer you'll use this like you would use any component in Vue that leveraged a `<RouterView>` component, but instead using `<slot />`.
+Just like with VueRouter that leveraged a `<RouterView>` component but instead using `<slot />`.
 
 #### +Header.vue
 
-A rendering component that renders thats in the document's `<head>`, which is exactly what I personally am looking for to update the info for my shareable links.
+A rendering component that renders in the document's `<head>`, which is exactly what I'm looking for.
 
 #### +title.js
 
@@ -207,8 +206,11 @@ My folder structure is updated to this:
 ```
 /src
   /pages
+    +Layout.vue
     /index
+      +Page.vue
     /articles
+      +Page.vue
       /articles/@articleSlug #dynamic route
         +data.js
         +Head.vue
@@ -218,15 +220,13 @@ My folder structure is updated to this:
         +title.js
 ```
 
-I'm only including the files from `/articles/@articleSlug` because they do the heaviest lifting in the app now.
-
 Two item's I didn't include above are __+onBeforePrerenderStart.js__ and __+route.js__.
 
-These two files are what inform Vike on how to handle a dynamically loaded page.
+These two files are used to inform Vike on how to handle a dynamically loaded page.
 
 #### +route.js
 
-Is very straightforward and just reiterates the route for Vike, in my case:
+`+route.js` is very straightforward and just reiterates the dynamic route for Vike, in my case:
 
 ```js
 export default '/articles/@articleSlug'
@@ -250,7 +250,7 @@ async function onBeforePrerenderStart() {
 
 #### +data.js
 
-Now that the static routes are build out, the data will properly be populated to the page in a way that leverages SSG and updates not only `<meta>` tags but also the articles information itself before rendering.
+Now that the static routes are built out, the data will properly be populated to the page in a way that leverages SSG and updates not only `<meta>` tags but also the article's information itself before rendering.
 
 ```javascript
 import { trimSummary } from '@/assets/helpers'
@@ -260,7 +260,7 @@ export { data }
 async function data(pageContext) {
   const articleSlug = pageContext.routeParams.articleSlug
 
-  const articleModule = await import(`../../../assets/articles/${articleSlug}.md`)
+  const articleModule = await import(`@/assets/articles/${articleSlug}.md`)
 
   const { attributes, html } = articleModule
   const summary = html
@@ -273,16 +273,10 @@ async function data(pageContext) {
 }
 ```
 
-This then becomes usable in `+Page.vue` component:
+This then becomes usable in `+Page.vue` or `+Head.vue` components:
 
 ```javascript
 const { articleSlug } = useData()
-```
-
-Or `+Head.vue`:
-
-```javascript
-const { attributes } = useData()
 ```
 
 Which is then used to populate out data as needed.
@@ -314,4 +308,52 @@ One thing that I wish could work would be for the `+data.js` helper to pass the 
 
 But then I think we're tip-toeing into React Server Components and that's a whole different article!
 
-But for now Vike fosters a very simple and easy transition from SPA to SSG, and I'd definitely recommend it for smaller sized projects that don't want to carry Nuxt.
+But for now Vike fosters a very simple and easy transition from SPA to SSG, and I'd definitely recommend it for smaller sized projects.
+
+### Adding A Third Party Script
+
+This one was driving me a bit crazy, even to the point where I reached out on the Vike Discord but received an answer that would require using a pretty old GTag library that I wasn't too crazy about.
+
+The solution ended up being fairly simple once I realized that Vike didn't have a solution for this (which seems like it might not be the best) and just added the script myself in the top level `+Layout.vue` file:
+
+```javascript
+// adding before mount to attach the script while the app is
+// rendering
+onBeforeMount(() => {
+  // add a guard so that analytics aren't logged on local
+  if (import.meta.env.MODE !== 'production') {
+    return
+  }
+
+  // check to see if the google analytics tag exists, this probably
+  // shouldn't be an issue on prod but it's a good safety measure
+  // when dynamically adding custom scripts
+  const gTagExists = !!document.querySelector('#g-script')
+
+  if (gTagExists) {
+    return
+  }
+
+  // create script tags as provided by analytics setup assistant
+  const gTagScript = document.createElement('script')
+  gTagScript.setAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX')
+  gTagScript.setAttribute('id', 'g-script')
+
+  const gTagScriptConfigId = document.createElement('script')
+  gTagScriptConfigId.innerHTML = `
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XXXXXXXX');
+  `
+
+  // prepend them within the body
+  document.body.prepend(gTagScriptConfigId)
+  document.body.prepend(gTagScript)
+})
+```
+
+Voila, Google Analytics added.
+
+I'm not _totally_ sure this will work, but there's only one way to find out.
