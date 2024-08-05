@@ -10,7 +10,7 @@ imageAttribution: https://unsplash.com/@hocza
 
 It's always bothered me that when I share a post from this site the metadata wasn't dynamic and would be a generic image placeholder and link info (because of the nature of _Single Page Applications (SPA)_).
 
-This isn't the best way to promote my posts and it's also pretty bad for my SEO scores in general, including lighthouse which is becoming an ever increasingly metric used for frontend development to a detriment, but that's a different article.
+This isn't the best way to promote my posts and it's also pretty bad for my SEO scores in general, including lighthouse which is becoming an ever increasingly metric used for frontend development -- _to a detriment_ but that's a different post.
 
 I tried some hacky solutions like programmatically adjusting `meta` tags in the `head` on navigation but unfortunately that solution doesn't work for creating links for services like LinkedIn and Facebook but the update happens after landing on the page.
 
