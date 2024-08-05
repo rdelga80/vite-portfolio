@@ -1,48 +1,37 @@
-import sanitizeHtml from 'sanitize-html'
+import pkg from 'lodash'
+const { truncate } = pkg
 
 export const getSlug = url => url.split('/').at(-1).replace('.md', '')
 
 export const getArticles = sliceLength => {
-  const articlesByGlob = import.meta.importGlob('../assets/articles/**.md')
+  const articlesByGlob = import.meta.glob('../assets/articles/**.md')
 
   const articleTitles = Object
     .keys(articlesByGlob)
-
+  
   return articleTitles
     .reverse()
     .slice(0, sliceLength || articleTitles.length)
     .map(glob => getSlug(glob))
 }
 
-export const setMeta = (metaKey, value, nameOrProperty = 'name') => {
-  if (!window) {
-    return
-  }
-  
-  const meta = document.querySelector(`meta[${nameOrProperty}="${metaKey}"]`)
+export const getArticle = async (slug) => {
+  const article = await import(`../assets/articles/${slug}.md`)
 
-  if (meta) {
-    meta.setAttribute('content', sanitizeHtml(value, {
-      allowedTags: []
-    }))
-  } else {
-    const headTag = document.getElementsByTagName('head')[0]
-
-    const metaTag = document.createElement('meta')
-
-    metaTag.setAttribute(nameOrProperty, metaKey)
-    metaTag.setAttribute('content', sanitizeHtml(value, {
-      allowedTags: []
-    }))
-
-    headTag.appendChild(metaTag)
-  }
+  return article
 }
 
-export const setPageMetaTitle = (title) => {
-  if (!window) {
-    return
-  }
+export const articleSlugToLink = (slug) => `/articles/${slug}/`
 
-  document.title = `${title} || Ricardo Delgado Web Dev`
+export const trimSummary = fullText => {
+  const hrIndex = fullText.indexOf('<hr')
+  
+  const textToTruncate = hrIndex > -1
+    ? fullText.slice(hrIndex).replace('<hr>', '')
+    : fullText
+
+  return truncate(textToTruncate, {
+    length: 500,
+    separator: ' '
+  })
 }

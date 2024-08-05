@@ -1,19 +1,49 @@
 <script setup>
-import { RouterView } from 'vue-router'
 import ASidebar from '@/components/ASidebar.vue'
+import { onBeforeMount } from 'vue';
+
+onBeforeMount(() => {
+  if (import.meta.env.MODE !== 'production') {
+    return
+  }
+
+  const gTagExists = !!document.querySelector('#g-script')
+
+  if (gTagExists) {
+    return
+  }
+
+  const gTagScript = document.createElement('script')
+  gTagScript.setAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=G-S19L4H8YY5')
+  gTagScript.setAttribute('id', 'g-script')
+
+  const gTagScriptConfigId = document.createElement('script')
+  gTagScriptConfigId.innerHTML = `
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-S19L4H8YY5');
+  `
+
+  document.body.prepend(gTagScriptConfigId)
+  document.body.prepend(gTagScript)
+})
 </script>
 
 <template>
   <div class="container">
     <main class="main">
-      <RouterView />
+      <slot />
     </main>
 
     <ASidebar class="sidebar" />
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@use '../assets/scss/global.scss';
+
 %container-vars {
   --grid-template-cols: 1fr 200px;
   --main-order: 1;

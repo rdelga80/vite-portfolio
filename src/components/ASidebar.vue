@@ -1,20 +1,47 @@
-<script>
-export default {
-  name: 'ASidebar'
-}
-</script>
-
 <script setup>
-import ArticleLoader from './ArticleLoader.vue'
-import { getArticles } from '@/assets/helpers.js'
+import { computed, ref } from 'vue'
+import ALink from './ALink.vue'
+import { articleSlugToLink, getArticle, getArticles } from '@/assets/helpers.js'
 
 const articles = getArticles(5)
+
+const getArticleNumber = (link) => Number(link.replace('/articles/','').substring(0, 2))
+
+const articleLinks = ref([])
+const articlesInOrder = computed(() => {
+  const orderedLinks = [...articleLinks.value]
+    ?.sort((a, b) => {
+      const aArticleNum = getArticleNumber(a.link)
+      const bArticleNum = getArticleNumber(b.link)
+
+      return bArticleNum - aArticleNum
+    }) 
+
+  return orderedLinks
+})
+
+const fetchArticles = () => {
+  articles.forEach(async (articleSlug) => {
+    const { attributes } = await getArticle(articleSlug)
+    const { title } = attributes
+
+    articleLinks.value = [
+      ...articleLinks.value,
+      {
+        link: articleSlugToLink(articleSlug),
+        title
+      }
+    ]
+  })
+}
+
+fetchArticles()
 </script>
 
 <template>
   <aside class="sidebar">
     <div class="sidebar-title">
-      <router-link to="/">
+      <ALink href="/">
         <h1>
           Ricardo Delgado
         </h1>
@@ -22,12 +49,12 @@ const articles = getArticles(5)
         <div class="sub-title">
             Senior Frontend Web Developer
           </div>
-      </router-link>
+      </ALink>
     </div>
 
-    <h6>
+    <div>
       email: ric [at] ricdelgado.com
-    </h6>
+    </div>
 
     <div class="methods">
       <p>
@@ -48,14 +75,14 @@ const articles = getArticles(5)
         Recent Articles
       </h4>
 
-      <div v-for="(article, index) in articles" :key="index">
-        <ArticleLoader :article-slug="article" short />
-      </div>
+      <ALink class="small" v-for="article in articlesInOrder" :href="article.link" :key="article.link">
+        {{ article.title }}
+      </ALink>
     </div>
 
-    <RouterLink to="/articles">
+    <ALink href="/articles">
       <h4>All Articles →</h4>
-    </RouterLink>
+    </ALink>
   </aside>
 </template>
 

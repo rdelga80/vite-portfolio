@@ -8,11 +8,11 @@ date: November 27, 2023
 ##### Building a FastAPI + Strawberry (Graphql) and NextJS 12 and React Server Components App
 
 * Part 1 - Setup For Strawberry + FastAPI
-* [Part 2 - Strawberry GraphQL: Queries and Mutations](/articles/16-building-fastapi-strawberry-nextjs-rsc-pt2)
-* [Part 3 - Managing Sessions and Context in Strawberry](/articles/17-building-fastapi-strawberry-nextjs-rsc-pt3)
-* [Part 4 - Switching to the Frontend: Next.js 13 and React Server Components, Pt. 1](/articles/18-building-fastapi-strawberry-nextjs-rsc-pt4)
-* [Part 5 - Structuring React Server Components](/articles/19-building-fastapi-strawberry-next-rsc-pt5)
-* [Part 6 - Handling Data Responses with React Server Components](/articles/20-building-fastapi-strawberry-next-rsc-pt6)
+* [Part 2 - Strawberry GraphQL: Queries and Mutations](/articles/16-building-fastapi-strawberry-nextjs-rsc-pt2/)
+* [Part 3 - Managing Sessions and Context in Strawberry](/articles/17-building-fastapi-strawberry-nextjs-rsc-pt3/)
+* [Part 4 - Switching to the Frontend: Next.js 13 and React Server Components, Pt. 1](/articles/18-building-fastapi-strawberry-nextjs-rsc-pt4/)
+* [Part 5 - Structuring React Server Components](/articles/19-building-fastapi-strawberry-next-rsc-pt5/)
+* [Part 6 - Handling Data Responses with React Server Components](/articles/20-building-fastapi-strawberry-next-rsc-pt6/)
 
 ---
 

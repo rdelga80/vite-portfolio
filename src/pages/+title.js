@@ -1,0 +1,1 @@
+export const title = 'Ricardo Delgado - Frontend Developer | VueJs, Nuxt, React, Next'

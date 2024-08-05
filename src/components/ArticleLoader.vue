@@ -1,8 +1,8 @@
 <script setup>
-import { onBeforeMount, shallowRef, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { shallowRef, watch } from 'vue'
 import pkg from 'lodash'
-import { useHead } from '@unhead/vue'
+import ALink from './ALink.vue'
+import { articleSlugToLink } from '@/assets/helpers'
 const { truncate } = pkg
 
 const props = defineProps({
@@ -22,7 +22,7 @@ const articleSummary = shallowRef(null)
 const trimSummary = fullText => {
   const hrIndex = fullText.indexOf('<hr')
   
-  const textToTruncate = hrIndex > -1
+  const textToTruncate = hrIndex > -1 && hrIndex < 8000
     ? fullText.slice(hrIndex).replace('<hr>', '')
     : fullText
 
@@ -32,12 +32,8 @@ const trimSummary = fullText => {
   })
 }
 
-watch(() => props.articleSlug, async (newArticleSlug) => {
-  await setArticle(newArticleSlug)
-})
-
 const setArticle = async (articleSlug) => {
-  const articleModule = () => import(`../assets/articles/${articleSlug}.md`)
+  const articleModule = () => import(`@/assets/articles/${articleSlug}.md`)
   return articleModule().then(async ({ attributes, html, VueComponent }) => {
     article.value = VueComponent
     articleAttributes.value = attributes
@@ -45,57 +41,18 @@ const setArticle = async (articleSlug) => {
   })
 }
 
-onBeforeMount(async () => {
-  await setArticle(props.articleSlug)
-})
+setArticle(props.articleSlug)
 
-const route = useRoute()
-const isHome = route.name === 'home'
-useHead({
-  title: () => isHome? undefined : articleAttributes.value?.title,
-  meta: () => isHome? undefined :  [
-    {
-      name: 'og:title',
-      content: articleAttributes.value?.title
-    },
-    {
-      name: 'description',
-      content: articleAttributes.value?.description
-    },
-    {
-      name: 'og:description',
-      content: articleAttributes.value?.description
-    },
-    {
-      name: 'og:image',
-      content: articleAttributes.value?.image
-    },
-    {
-      name: 'keywords',
-      content: articleAttributes.value?.tags
-    }
-  ]
-})
+watch(() => props.articleSlug, newSlug => setArticle(newSlug))
 </script>
 
 <template>
   <article class="article">
-    <router-link v-if="summary" :to="{ name: 'article', params: { articleSlug } }">
+    <ALink :href="articleSlugToLink(articleSlug)">
       <h2 class="article-title">
         {{ articleAttributes?.title }}
       </h2>
-    </router-link>
-
-    <router-link
-      v-else-if="short"
-      class="short-link"
-      :to="{ name: 'article', params: { articleSlug } }">
-      {{ articleAttributes?.title }}
-    </router-link>
-
-    <h2 class="article-title" v-else>
-      {{ articleAttributes?.title }}
-    </h2>
+    </ALink>
 
     <span v-if="!short" class="article-date">
       {{ articleAttributes?.date }}
@@ -112,22 +69,20 @@ useHead({
     </div>
 
     <div class="more">
-      <router-link v-if="summary" :to="{ name: 'article', params: { articleSlug } }">
+      <ALink v-if="summary" :href="articleSlugToLink(articleSlug)">
         Read More...
-      </router-link>
+      </ALink>
     </div>
   </article>
 </template>
 
 <style lang="scss" scoped>
 .article {
-  :deep {
-    img {
-      width: 100%;
-    }
-    pre {
-      white-space: pre-wrap;
-    }
+  :deep(img) {
+    width: 100%;
+  }
+  :deep(pre) {
+    white-space: pre-wrap;
   } 
 }
 
