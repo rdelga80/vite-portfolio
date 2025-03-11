@@ -1,6 +1,3 @@
-import pkg from 'lodash'
-const { truncate } = pkg
-
 export const getSlug = url => url.split('/').at(-1).replace('.md', '')
 
 export const getArticles = sliceLength => {
@@ -30,8 +27,8 @@ export const trimSummary = fullText => {
     ? fullText.slice(hrIndex).replace('<hr>', '')
     : fullText
 
-  return truncate(textToTruncate, {
-    length: 500,
-    separator: ' '
-  })
+    const limitedText = textToTruncate.slice(0, 515)
+    const lastIndexOfSpace = limitedText.lastIndexOf(' ')
+  
+    return `${limitedText.slice(0, lastIndexOfSpace)}...`
 }
