@@ -1,9 +1,7 @@
 <script setup>
 import { shallowRef, watch } from 'vue'
-import pkg from 'lodash'
 import ALink from './ALink.vue'
 import { articleSlugToLink } from '@/assets/helpers'
-const { truncate } = pkg
 
 const props = defineProps({
   articleSlug: {
@@ -26,10 +24,10 @@ const trimSummary = fullText => {
     ? fullText.slice(hrIndex).replace('<hr>', '')
     : fullText
 
-  return truncate(textToTruncate, {
-    length: 500,
-    separator: ' '
-  })
+  const limitedText = textToTruncate.slice(0, 515)
+  const lastIndexOfSpace = limitedText.lastIndexOf(' ')
+
+  return `${limitedText.slice(0, lastIndexOfSpace)}...`
 }
 
 const setArticle = async (articleSlug) => {
