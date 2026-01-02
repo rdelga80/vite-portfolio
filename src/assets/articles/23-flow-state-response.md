@@ -173,7 +173,7 @@ Smaller PRs are easier for you to understand and it makes it infinitely easier f
 
 ### The Prescription
 
-This requires planning and this is where tech workers bite off their noses despite their faces, creating chaos on themselves and their coworkers. One of the hardest things to do is maintaining this mindset in the midst of a PM pushing you to finish a feature on a short deadline.
+This requires planning and this is where tech workers bite off their noses to spite their faces, creating chaos on themselves and their coworkers. One of the hardest things to do is maintaining this mindset in the midst of a PM pushing you to finish a feature on a short deadline.
 
 But putting in the time upfront has _exponential benefits_ over the long term for developing.
 
