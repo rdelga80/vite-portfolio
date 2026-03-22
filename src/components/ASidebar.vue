@@ -86,30 +86,24 @@ fetchArticles()
   </aside>
 </template>
 
-<style lang="scss" scoped>
-%sidebar-vars {
+<style scoped>
+.sidebar {
   --articles-display: flex;
   --details-display: unset;
-  
-  @media (max-width: $mobile-breakpoint) {
-    --articles-display: none;
-    --details-display: none;
-  }
-}
-
-.sidebar {
-  @extend %sidebar-vars;
 
   opacity: 1;
   height: 100%;
   overflow: hidden scroll;
   padding: 1rem;
+
+  @media (max-width: 685px) {
+    --articles-display: none;
+    --details-display: none;
+  }
 }
 
-.sidebar-title h1 {
-  @at-root a {
-    text-decoration: none;
-  }
+.sidebar-title h1 a {
+  text-decoration: none;
 }
 
 .methods {

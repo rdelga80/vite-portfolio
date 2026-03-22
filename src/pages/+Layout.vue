@@ -41,23 +41,13 @@ onBeforeMount(() => {
   </div>
 </template>
 
-<style lang="scss">
-@use '../assets/scss/global.scss';
+<style>
+@import '../assets/css/global.css';
 
-%container-vars {
+.container {
   --grid-template-cols: 1fr 200px;
   --main-order: 1;
   --sidebar-order: 2;
-
-  @media (max-width: $mobile-breakpoint) {
-    --grid-template-cols: 100%;
-    --main-order: 2;
-    --sidebar-order: 1;
-  }
-}
-
-.container {
-  @extend %container-vars;
 
   column-gap: 12px;
   display: grid;
@@ -67,6 +57,12 @@ onBeforeMount(() => {
   margin: 0 auto;
   overflow: hidden;
   width: 800px;
+
+  @media (max-width: 685px) {
+    --grid-template-cols: 100%;
+    --main-order: 2;
+    --sidebar-order: 1;
+  }
 }
 
 .main {
@@ -74,10 +70,8 @@ onBeforeMount(() => {
   overflow: hidden;
   order: var(--main-order);
   width: 100%;
-  padding: {
-    top: 1rem;
-    bottom: 1rem;
-  }
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .sidebar {

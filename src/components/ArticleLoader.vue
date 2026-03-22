@@ -74,22 +74,22 @@ watch(() => props.articleSlug, newSlug => setArticle(newSlug))
   </article>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .article {
-  :deep(img) {
+  &:deep(img) {
     width: 100%;
   }
-  :deep(pre) {
+  &:deep(pre) {
     white-space: pre-wrap;
-  } 
+  }
 }
 
 .article-title {
   margin-bottom: 0;
+}
 
-  @at-root a {
-    text-decoration: none;
-  }
+.article-title a {
+  text-decoration: none;
 }
 
 .article-date {
