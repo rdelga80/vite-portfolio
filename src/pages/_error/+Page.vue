@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .four-oh-four-container {
   display: flex;
   flex-direction: column;

@@ -38,13 +38,6 @@ export default defineConfig({
       '@': fileURLToPath(srcPath)
     }
   },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@use '${srcPath}/assets/scss/variables.scss' as *;`
-      }
-    }
-  },
   server: {
     port: 3001
   },

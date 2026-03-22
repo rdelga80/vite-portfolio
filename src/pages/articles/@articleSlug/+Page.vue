@@ -46,19 +46,15 @@ setArticle(articleSlug)
   </section>
 </template>
 
-<style lang="scss" scoped>
-%article-wrap {
+<style scoped>
+.article-wrap {
   --padding-right: 30px;
+
+  padding-right: var(--padding-right);
 
   @media (max-width: 600px) {
     --padding-right: 0;
   }
-}
-
-.article-wrap {
-  @extend %article-wrap;
-
-  padding-right: var(--padding-right);
 
   &:deep(p > img) {
     width: 100%;
@@ -67,11 +63,9 @@ setArticle(articleSlug)
 
 .figure {
   height: 300px;
-  margin: {
-    left: 0;
-    right: 0;
-    bottom: 40px;
-  }
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 40px;
 }
 
 .image-wrapper {

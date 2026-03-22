@@ -10,10 +10,10 @@ pre {
   padding: 12px;
   overflow: scroll;
 
-  code {
+  & code {
     line-height: 1.5;
 
-    span[class*='hljs-'] {
+    & span[class*='hljs-'] {
       white-space: nowrap;
     }
   }
@@ -22,21 +22,17 @@ pre {
 hr {
   border-top: 1px solid rgba(149, 149, 149, 40%);
   border-bottom: none;
-  margin-block: {
-    start: 2em;
-    end: 2em
-  }
+  margin-block-start: 2em;
+  margin-block-end: 2em;
 }
 
 blockquote {
   background: #EEE;
   border-left: 4px solid gray;
-  margin-inline: {
-    start: 1em;
-    end: 1em;
-  }
+  margin-inline-start: 1em;
+  margin-inline-end: 1em;
 
-  > * {
+  & > * {
     padding: 0.5em;
   }
 }

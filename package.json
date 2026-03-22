@@ -11,9 +11,9 @@
   "dependencies": {
     "@vue/server-renderer": "3.4.34",
     "sanitize-html": "2.12.1",
-    "vike": "0.4.181",
+    "vike": "0.4.255",
     "vike-vue": "0.7.6",
-    "vite": "5.4.21",
+    "vite": "8.0.1",
     "vue": "3.4.34"
   },
   "devDependencies": {
@@ -21,8 +21,6 @@
     "eslint": "8.5.0",
     "eslint-plugin-vue": "8.2.0",
     "highlight.js": "11.9.0",
-    "sass": "1.52.1",
-    "sass-loader": "13.0.0",
     "vite-plugin-markdown": "2.1.0"
   },
   "packageManager": "pnpm@9.15.3+sha1.120e76442c589bb9a3267dbbefa5658c9943fcae"

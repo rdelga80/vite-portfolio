@@ -19,7 +19,7 @@ const articles = getArticles()
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .articles {
   padding-right: 30px;
 }
