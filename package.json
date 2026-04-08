@@ -11,8 +11,8 @@
   "dependencies": {
     "@vue/server-renderer": "3.4.34",
     "sanitize-html": "2.12.1",
-    "vike": "0.4.255",
-    "vike-vue": "0.7.6",
+    "vike": "0.4.256",
+    "vike-vue": "0.9.11",
     "vite": "8.0.5",
     "vue": "3.4.34"
   },
