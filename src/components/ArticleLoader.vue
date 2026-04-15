@@ -35,6 +35,13 @@ const trimSummary = fullText => {
   const lastIndexOfSpace = limitedText.lastIndexOf(' ')
   limitedText = limitedText.slice(0, lastIndexOfSpace)
 
+  // Re-check: the space trim may have cut inside a tag's attribute value
+  const lastTagOpen2 = limitedText.lastIndexOf('<')
+  const lastTagClose2 = limitedText.lastIndexOf('>')
+  if (lastTagOpen2 > lastTagClose2) {
+    limitedText = limitedText.slice(0, lastTagOpen2)
+  }
+
   const openTags = []
   const tagPattern = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi
   let match
