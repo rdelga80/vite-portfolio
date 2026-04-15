@@ -27,8 +27,15 @@ export const trimSummary = fullText => {
     ? fullText.slice(hrIndex).replace('<hr>', '')
     : fullText
 
-    const limitedText = textToTruncate.slice(0, 515)
-    const lastIndexOfSpace = limitedText.lastIndexOf(' ')
-  
-    return `${limitedText.slice(0, lastIndexOfSpace)}...`
+    let limitedText = textToTruncate.slice(0, 515)
+
+  const lastTagOpen = limitedText.lastIndexOf('<')
+  const lastTagClose = limitedText.lastIndexOf('>')
+  if (lastTagOpen > lastTagClose) {
+    limitedText = limitedText.slice(0, lastTagOpen)
+  }
+
+  const lastIndexOfSpace = limitedText.lastIndexOf(' ')
+
+  return `${limitedText.slice(0, lastIndexOfSpace)}...`
 }
