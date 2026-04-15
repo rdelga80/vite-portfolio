@@ -19,7 +19,7 @@ const articleSummary = shallowRef(null)
 
 const trimSummary = fullText => {
   const hrIndex = fullText.indexOf('<hr')
-  
+
   const textToTruncate = hrIndex > -1 && hrIndex < 8000
     ? fullText.slice(hrIndex).replace('<hr>', '')
     : fullText
@@ -33,8 +33,27 @@ const trimSummary = fullText => {
   }
 
   const lastIndexOfSpace = limitedText.lastIndexOf(' ')
+  limitedText = limitedText.slice(0, lastIndexOfSpace)
 
-  return `${limitedText.slice(0, lastIndexOfSpace)}...`
+  const openTags = []
+  const tagPattern = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi
+  let match
+  while ((match = tagPattern.exec(limitedText)) !== null) {
+    const isClosing = match[0].startsWith('</')
+    const tag = match[1].toLowerCase()
+    const isSelfClosing = /\/>$/.test(match[0]) || ['br', 'hr', 'img'].includes(tag)
+    if (isSelfClosing) continue
+    if (isClosing) {
+      const idx = openTags.lastIndexOf(tag)
+      if (idx !== -1) openTags.splice(idx, 1)
+    } else {
+      openTags.push(tag)
+    }
+  }
+
+  const closingTags = openTags.reverse().map(tag => `</${tag}>`).join('')
+
+  return `${limitedText}...${closingTags}`
 }
 
 const setArticle = async (articleSlug) => {
