@@ -10,18 +10,22 @@
   },
   "dependencies": {
     "@vue/server-renderer": "3.4.34",
-    "sanitize-html": "2.12.1",
     "vike": "0.4.256",
     "vike-vue": "0.9.11",
-    "vite": "8.0.5",
+    "vite": "8.2.2",
     "vue": "3.4.34"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "2.3.1",
+    "@vitejs/plugin-vue": "6.0.8",
     "eslint": "8.5.0",
     "eslint-plugin-vue": "8.2.0",
     "highlight.js": "11.9.0",
-    "vite-plugin-markdown": "2.1.0"
+    "vite-plugin-markdown": "2.2.0"
   },
-  "packageManager": "pnpm@9.15.3+sha1.120e76442c589bb9a3267dbbefa5658c9943fcae"
+  "packageManager": "pnpm@9.15.3+sha1.120e76442c589bb9a3267dbbefa5658c9943fcae",
+  "pnpm": {
+    "overrides": {
+      "markdown-it": "^14.3.1"
+    }
+  }
 }
